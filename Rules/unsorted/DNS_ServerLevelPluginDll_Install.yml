@@ -1,0 +1,35 @@
+type: x-detection-rule
+id: x-detection-rule--0bb2fab4-f790-4a1c-a13d-229d159a630f
+created: '2018-12-03T23:30:44.909Z'
+modified: '2018-12-03T23:30:44.909Z'
+title: DNS ServerLevelPluginDll Install
+status: experimental
+description: Detects the installation of a plugin DLL via ServerLevelPluginDll parameter
+  in Registry, which can be used to execute code in context of the DNS server (restart
+  required)
+references:
+- https://medium.com/@esnesenon/feature-not-bug-dnsadmin-to-dc-compromise-in-one-line-a0f779b8dc83
+author: Florian Roth
+date: 2017/05/08
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  condition: 1 of them
+  dnsadmin:
+    CommandLine: dnscmd.exe /config /serverlevelplugindll *
+    EventID: 1
+  dnsregmod:
+    EventID: 13
+    TargetObject: '*\services\DNS\Parameters\ServerLevelPluginDll'
+fields:
+- EventID
+- CommandLine
+- ParentCommandLine
+- Image
+- User
+- TargetObject
+falsepositives:
+- unknown
+level: high
+source: sigma

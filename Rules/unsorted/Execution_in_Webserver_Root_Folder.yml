@@ -1,0 +1,35 @@
+type: x-detection-rule
+id: x-detection-rule--e7542d2e-4946-411d-aea0-6e226bc6cc97
+created: '2018-12-03T23:30:44.847Z'
+modified: '2018-12-03T23:30:44.847Z'
+title: Execution in Webserver Root Folder
+status: experimental
+description: Detects a suspicious program execution in a web service root folder
+  (filter out false positives)
+author: Florian Roth
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  condition: selection and not filter
+  filter:
+    Image:
+    - '*bin\*'
+    - '*\Tools\*'
+    - '*\SMSComponent\*'
+    ParentImage:
+    - '*\services.exe'
+  selection:
+    EventID: 1
+    Image:
+    - '*\wwwroot\*'
+    - '*\wmpub\*'
+    - '*\htdocs\*'
+fields:
+- CommandLine
+- ParentCommandLine
+falsepositives:
+- Various applications
+- Tools that include ping or nslookup command invocations
+level: medium
+source: sigma

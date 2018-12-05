@@ -1,0 +1,30 @@
+type: x-detection-rule
+id: x-detection-rule--8ed9a237-eb97-4924-843c-b9cdc151beb2
+created: '2018-12-04T15:23:00.467Z'
+modified: '2018-12-04T15:23:00.467Z'
+title: WMIC calling vbscript or jscript
+revision: '1'
+revNotes:
+- Initial commit
+status: experimental
+description: This rule is designed to alert on WMIC loading jscript or vbscript
+author: Brandon Martin and Nick Ascoli
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  condition: selection
+  selection:
+    EventID: 8
+    SourceImage:
+    - '*\wmic.exe'
+    StartModule:
+    - jscript.dll
+    - vbscript.dll
+falsepositives:
+- unknown
+level: medium
+tags:
+- attack.execution
+enrichment: None
+source: TALR

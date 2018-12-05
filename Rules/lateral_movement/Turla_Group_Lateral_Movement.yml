@@ -1,0 +1,51 @@
+type: x-detection-rule
+id: x-detection-rule--19d30b24-529c-464a-a5cc-64b26ce3c5d2
+created: '2018-12-03T23:30:44.340Z'
+modified: '2018-12-03T23:30:44.340Z'
+action: global
+title: Turla Group Lateral Movement
+status: experimental
+description: Detects automated lateral movement by Turla group
+references:
+- https://securelist.com/the-epic-turla-operation/65545/
+author: Markus Neis
+date: 2017/11/07
+logsource:
+  product: windows
+  service: sysmon
+falsepositives:
+- Unknown
+tags:
+- attack.lateral_movement
+- attack.g0010
+type: x-detection-rule
+id: x-detection-rule--fa45d055-9656-4f79-b63d-c9a8f6cbdea0
+created: '2018-12-03T23:30:44.341Z'
+modified: '2018-12-03T23:30:44.341Z'
+detection:
+  condition: selection
+  selection:
+    CommandLine:
+    - net use \\%DomainController%\C$ "P@ssw0rd" *
+    - dir c:\*.doc* /s
+    - dir %TEMP%\*.exe
+    EventID: 1
+level: critical
+type: x-detection-rule
+id: x-detection-rule--67ecde58-2299-4c4a-bd7c-b262a79e85d1
+created: '2018-12-03T23:30:44.342Z'
+modified: '2018-12-03T23:30:44.342Z'
+detection:
+  condition: netCommand1 | near netCommand2 and netCommand3
+  netCommand1:
+    CommandLine: net view /DOMAIN
+    EventID: 1
+  netCommand2:
+    CommandLine: net session
+    EventID: 1
+  netCommand3:
+    CommandLine: net share
+    EventID: 1
+  timeframe: 1m
+level: medium
+source: sigma

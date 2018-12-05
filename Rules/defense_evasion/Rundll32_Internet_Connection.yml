@@ -1,0 +1,33 @@
+type: x-detection-rule
+id: x-detection-rule--bdd5025b-e877-46fc-8f59-ad13c2521ad4
+created: '2018-12-03T23:30:44.756Z'
+modified: '2018-12-03T23:30:44.756Z'
+title: Rundll32 Internet Connection
+status: experimental
+description: Detects a rundll32 that communicates with public IP addresses
+references:
+- https://www.hybrid-analysis.com/sample/759fb4c0091a78c5ee035715afe3084686a8493f39014aea72dae36869de9ff6?environmentId=100
+author: Florian Roth
+date: 2017/11/04
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  condition: selection and not filter
+  filter:
+    DestinationIp:
+    - 10.*
+    - 192.168.*
+    - 172.*
+  selection:
+    EventID: 3
+    Image: '*\rundll32.exe'
+falsepositives:
+- Communication to other corporate systems that use IP addresses from public address
+  spaces
+level: medium
+tags:
+- attack.t1085
+- attack.defense_evasion
+- attack.execution
+source: sigma

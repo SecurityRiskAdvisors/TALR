@@ -1,0 +1,26 @@
+type: x-detection-rule
+id: x-detection-rule--7a01bd61-4746-4fc7-87d8-0b79df6e8df7
+created: '2018-12-03T23:30:44.455Z'
+modified: '2018-12-03T23:30:44.455Z'
+title: Suspicious SQL Error Messages
+status: experimental
+description: Detects SQL error messages that indicate probing for an injection attack
+references:
+- http://www.sqlinjection.net/errors
+author: Bjoern Kimminich
+logsource:
+  category: application
+  product: sql
+detection:
+  condition: keywords
+  keywords:
+  - quoted string not properly terminated
+  - You have an error in your SQL syntax
+  - Unclosed quotation mark
+  - 'near "*": syntax error'
+  - SELECTs to the left and right of UNION do not have the same number of result
+    columns
+falsepositives:
+- Application bugs
+level: high
+source: sigma

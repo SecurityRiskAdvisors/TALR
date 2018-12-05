@@ -1,0 +1,121 @@
+type: x-detection-rule
+id: x-detection-rule--df18048a-a06d-49a9-8ac3-77e06a9123fa
+created: '2018-12-03T23:30:44.785Z'
+modified: '2018-12-03T23:30:44.785Z'
+title: Executable used by PlugX in Uncommon Location
+status: experimental
+description: Detects the execution of an executable that is typically used by PlugX
+  for DLL side loading started from an uncommon location
+references:
+- http://www.hexacorn.com/blog/2016/03/10/beyond-good-ol-run-key-part-36/
+- https://countuponsecurity.com/2017/06/07/threat-hunting-in-the-enterprise-with-appcompatprocessor/
+author: Florian Roth
+date: 2017/06/12
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  condition: ( selection_cammute and not filter_cammute ) or ( selection_chrome_frame
+    and not filter_chrome_frame ) or ( selection_devemu and not filter_devemu )
+    or ( selection_gadget and not filter_gadget ) or ( selection_hcc and not filter_hcc
+    ) or ( selection_hkcmd and not filter_hkcmd ) or ( selection_mc and not filter_mc
+    ) or ( selection_msmpeng and not filter_msmpeng ) or ( selection_msseces and
+    not filter_msseces ) or ( selection_oinfo and not filter_oinfo ) or ( selection_oleview
+    and not filter_oleview ) or ( selection_rc and not filter_rc )
+  filter_cammute:
+    EventID: 1
+    Image: '*\Lenovo\Communication Utility\*'
+  filter_chrome_frame:
+    EventID: 1
+    Image: '*\Google\Chrome\application\*'
+  filter_devemu:
+    EventID: 1
+    Image: '*\Microsoft Device Emulator\*'
+  filter_gadget:
+    EventID: 1
+    Image: '*\Windows Media Player\*'
+  filter_hcc:
+    EventID: 1
+    Image: '*\HTML Help Workshop\*'
+  filter_hkcmd:
+    EventID: 1
+    Image:
+    - '*\System32\*'
+    - '*\SysNative\*'
+    - '*\SysWowo64\*'
+  filter_mc:
+    EventID: 1
+    Image:
+    - '*\Microsoft Visual Studio*'
+    - '*\Microsoft SDK*'
+    - '*\Windows Kit*'
+  filter_msmpeng:
+    EventID: 1
+    Image:
+    - '*\Microsoft Security Client\*'
+    - '*\Windows Defender\*'
+    - '*\AntiMalware\*'
+  filter_msseces:
+    EventID: 1
+    Image: '*\Microsoft Security Center\*'
+  filter_oinfo:
+    EventID: 1
+    Image: '*\Common Files\Microsoft Shared\*'
+  filter_oleview:
+    EventID: 1
+    Image:
+    - '*\Microsoft Visual Studio*'
+    - '*\Microsoft SDK*'
+    - '*\Windows Kit*'
+    - '*\Windows Resource Kit\*'
+  filter_rc:
+    EventID: 1
+    Image:
+    - '*\Microsoft Visual Studio*'
+    - '*\Microsoft SDK*'
+    - '*\Windows Kit*'
+    - '*\Windows Resource Kit\*'
+    - '*\Microsoft.NET\*'
+  selection_cammute:
+    EventID: 1
+    Image: '*\CamMute.exe'
+  selection_chrome_frame:
+    EventID: 1
+    Image: '*\chrome_frame_helper.exe'
+  selection_devemu:
+    EventID: 1
+    Image: '*\dvcemumanager.exe'
+  selection_gadget:
+    EventID: 1
+    Image: '*\Gadget.exe'
+  selection_hcc:
+    EventID: 1
+    Image: '*\hcc.exe'
+  selection_hkcmd:
+    EventID: 1
+    Image: '*\hkcmd.exe'
+  selection_mc:
+    EventID: 1
+    Image: '*\Mc.exe'
+  selection_msmpeng:
+    EventID: 1
+    Image: '*\MsMpEng.exe'
+  selection_msseces:
+    EventID: 1
+    Image: '*\msseces.exe'
+  selection_oinfo:
+    EventID: 1
+    Image: '*\OInfoP11.exe'
+  selection_oleview:
+    EventID: 1
+    Image: '*\OleView.exe'
+  selection_rc:
+    EventID: 1
+    Image: '*\OleView.exe'
+fields:
+- CommandLine
+- ParentCommandLine
+falsepositives:
+- Unknown
+level: high
+source: sigma

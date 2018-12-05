@@ -1,0 +1,30 @@
+type: x-detection-rule
+id: x-detection-rule--babab5fe-4288-493d-890a-89ee98ef71b0
+created: '2018-12-03T23:30:44.593Z'
+modified: '2018-12-03T23:30:44.593Z'
+title: Enabled User Right in AD to Control User Objects
+description: Detects scenario where if a user is assigned the SeEnableDelegationPrivilege
+  right in Active Directory it would allow control of other AD user objects.
+references:
+- https://www.harmj0y.net/blog/activedirectory/the-most-dangerous-user-right-you-probably-have-never-heard-of/
+author: '@neu5ron'
+logsource:
+  product: windows
+  description: 'Requirements: Audit Policy : Policy Change > Audit Authorization
+    Policy Change, Group Policy : Computer Configuration\Windows Settings\Security
+    Settings\Advanced Audit Policy Configuration\Audit Policies\Policy Change\Audit
+    Authorization Policy Change'
+  service: security
+detection:
+  condition: all of them
+  keywords:
+  - SeEnableDelegationPrivilege
+  selection:
+    EventID: 4704
+falsepositives:
+- Unknown
+level: high
+tags:
+- attack.privilege_escalation
+- attack.t1078
+source: sigma

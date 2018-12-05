@@ -1,0 +1,25 @@
+type: x-detection-rule
+id: x-detection-rule--1fcb93e7-a4fc-4dd4-bd6a-4bc503ae89ae
+created: '2018-12-03T23:30:44.675Z'
+modified: '2018-12-03T23:30:44.675Z'
+title: Rare Scheduled Task Creations
+status: experimental
+description: This rule detects rare scheduled task creations. Typically software
+  gets installed on multiple systems and not only on a few. The aggregation and
+  count function selects tasks with rare names.
+author: Florian Roth
+logsource:
+  product: windows
+  service: taskscheduler
+detection:
+  condition: selection | count() by TaskName < 5
+  selection:
+    EventID: 106
+  timeframe: 7d
+falsepositives:
+- Software installation
+level: low
+tags:
+- attack.t1053
+- attack.s0111
+source: sigma

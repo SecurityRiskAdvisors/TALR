@@ -1,0 +1,47 @@
+type: x-detection-rule
+id: x-detection-rule--3030f4de-1468-463c-a71d-c4634040d5bd
+created: '2018-12-03T23:30:44.566Z'
+modified: '2018-12-03T23:30:44.566Z'
+action: global
+title: IIS Native-Code Module Command Line Installation
+status: experimental
+description: Detects suspicious IIS native-code module installations via command
+  line
+references:
+- https://researchcenter.paloaltonetworks.com/2018/01/unit42-oilrig-uses-rgdoor-iis-backdoor-targets-middle-east/
+author: Florian Roth
+detection:
+  condition: selection
+  selection:
+    CommandLine:
+    - '*\APPCMD.EXE install module /name:*'
+falsepositives:
+- Unknown as it may vary from organisation to arganisation how admins use to install
+  IIS modules
+level: medium
+tags:
+- attack.persistence
+- attack.t1100
+type: x-detection-rule
+id: x-detection-rule--01748b54-d419-46ac-9931-23035d737828
+created: '2018-12-03T23:30:44.567Z'
+modified: '2018-12-03T23:30:44.567Z'
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection:
+    EventID: 1
+type: x-detection-rule
+id: x-detection-rule--a3b934be-b4b7-4094-8f53-083ec7f151b9
+created: '2018-12-03T23:30:44.568Z'
+modified: '2018-12-03T23:30:44.568Z'
+logsource:
+  product: windows
+  description: 'Requirements: Audit Policy : Detailed Tracking > Audit Process creation,
+    Group Policy : Administrative Templates\System\Audit Process Creation'
+  service: security
+detection:
+  selection:
+    EventID: 4688
+source: sigma

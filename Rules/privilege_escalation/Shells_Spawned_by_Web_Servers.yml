@@ -1,0 +1,37 @@
+type: x-detection-rule
+id: x-detection-rule--b7edcab0-8cca-4f82-a6a3-004a1ef1e8e7
+created: '2018-12-03T23:30:44.880Z'
+modified: '2018-12-03T23:30:44.880Z'
+title: Shells Spawned by Web Servers
+status: experimental
+description: Web servers that spawn shell processes could be the result of a successfully
+  placed web shell or an other attack
+author: Thomas Patzke
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  condition: selection
+  selection:
+    EventID: 1
+    Image:
+    - '*\cmd.exe'
+    - '*\sh.exe'
+    - '*\bash.exe'
+    - '*\powershell.exe'
+    ParentImage:
+    - '*\w3wp.exe'
+    - '*\httpd.exe'
+    - '*\nginx.exe'
+    - '*\php-cgi.exe'
+fields:
+- CommandLine
+- ParentCommandLine
+falsepositives:
+- Particular web applications may spawn a shell process legitimately
+level: high
+tags:
+- attack.privilege_escalation
+- attack.persistence
+- attack.t1100
+source: sigma

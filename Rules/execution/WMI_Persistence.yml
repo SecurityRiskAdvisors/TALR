@@ -1,0 +1,34 @@
+type: x-detection-rule
+id: x-detection-rule--139e4d49-96e5-4d79-8164-cc4bc130f67d
+created: '2018-12-03T23:30:44.681Z'
+modified: '2018-12-03T23:30:44.681Z'
+title: WMI Persistence
+status: experimental
+description: Detects suspicious WMI event filter and command line event consumer
+  based on event id 5861 and 5859 (Windows 10, 2012 and higher)
+references:
+- https://twitter.com/mattifestation/status/899646620148539397
+- https://www.eideon.com/2018-03-02-THL03-WMIBackdoors/
+author: Florian Roth
+logsource:
+  product: windows
+  service: wmi
+detection:
+  condition: selection and 1 of keywords or selection2
+  keywords:
+  - ActiveScriptEventConsumer
+  - CommandLineEventConsumer
+  - CommandLineTemplate
+  - Binding EventFilter
+  selection:
+    EventID: 5861
+  selection2:
+    EventID: 5859
+falsepositives:
+- Unknown (data set is too small; further testing needed)
+level: high
+tags:
+- attack.execution
+- attack.persistence
+- attack.t1047
+source: sigma

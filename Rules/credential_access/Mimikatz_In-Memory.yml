@@ -1,0 +1,42 @@
+type: x-detection-rule
+id: x-detection-rule--d937559b-601f-457b-8106-f3b2f63269f0
+created: '2018-12-03T23:30:44.747Z'
+modified: '2018-12-03T23:30:44.747Z'
+title: Mimikatz In-Memory
+status: experimental
+description: Detects certain DLL loads when Mimikatz gets executed
+references:
+- https://securityriskadvisors.com/blog/post/detecting-in-memory-mimikatz/
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  condition: selector | near dllload1 and dllload2 and not exclusion
+  dllload1:
+    ImageLoaded: '*\vaultcli.dll'
+  dllload2:
+    ImageLoaded: '*\wlanapi.dll'
+  exclusion:
+    ImageLoaded:
+    - ntdsapi.dll
+    - netapi32.dll
+    - imm32.dll
+    - samlib.dll
+    - combase.dll
+    - srvcli.dll
+    - shcore.dll
+    - ntasn1.dll
+    - cryptdll.dll
+    - logoncli.dll
+  selector:
+    EventID: 7
+    Image: C:\Windows\System32\rundll32.exe
+  timeframe: 30s
+falsepositives:
+- unknown
+level: medium
+tags:
+- attack.s0002
+- attack.lateral_movement
+- attack.credential_access
+source: sigma

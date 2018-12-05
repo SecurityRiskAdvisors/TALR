@@ -1,0 +1,30 @@
+type: x-detection-rule
+id: x-detection-rule--9c778471-4771-4df4-a66f-a40232eff288
+created: '2018-12-03T23:30:44.744Z'
+modified: '2018-12-03T23:30:44.744Z'
+title: Suspicious Svchost Process
+status: experimental
+description: Detects a suspicious svchost process start
+author: Florian Roth
+date: 2017/08/15
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  condition: selection and not filter
+  filter:
+    ParentImage:
+    - '*\services.exe'
+    - '*\MsMpEng.exe'
+  selection:
+    EventID: 1
+    Image: '*\svchost.exe'
+fields:
+- CommandLine
+- ParentCommandLine
+falsepositives:
+- Unknown
+level: high
+tags:
+- attack.defense_evasion
+source: sigma

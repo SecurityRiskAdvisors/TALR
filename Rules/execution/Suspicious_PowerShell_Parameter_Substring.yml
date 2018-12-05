@@ -1,0 +1,65 @@
+type: x-detection-rule
+id: x-detection-rule--510d719c-c407-4480-9ed0-adab2d523872
+created: '2018-12-03T23:30:44.724Z'
+modified: '2018-12-03T23:30:44.724Z'
+title: Suspicious PowerShell Parameter Substring
+status: experimental
+description: Detects suspicious PowerShell invocation with a parameter substring
+references:
+- http://www.danielbohannon.com/blog-1/2017/3/12/powershell-execution-argument-obfuscation-how-it-can-make-detection-easier
+author: Florian Roth (rule), Daniel Bohannon (idea)
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  condition: all of them
+  keywords:
+    Image: '*\powershell.exe'
+  substrings:
+  - ' -windowstyle h '
+  - ' -windowstyl h'
+  - ' -windowsty h'
+  - ' -windowst h'
+  - ' -windows h'
+  - ' -windo h'
+  - ' -wind h'
+  - ' -win h'
+  - ' -wi h'
+  - ' -win h '
+  - ' -win hi '
+  - ' -win hid '
+  - ' -win hidd '
+  - ' -win hidde '
+  - ' -NoPr '
+  - ' -NoPro '
+  - ' -NoProf '
+  - ' -NoProfi '
+  - ' -NoProfil '
+  - ' -nonin '
+  - ' -nonint '
+  - ' -noninte '
+  - ' -noninter '
+  - ' -nonintera '
+  - ' -noninterac '
+  - ' -noninteract '
+  - ' -noninteracti '
+  - ' -noninteractiv '
+  - ' -ec '
+  - ' -encodedComman '
+  - ' -encodedComma '
+  - ' -encodedComm '
+  - ' -encodedCom '
+  - ' -encodedCo '
+  - ' -encodedC '
+  - ' -encoded '
+  - ' -encode '
+  - ' -encod '
+  - ' -enco '
+  - ' -en '
+falsepositives:
+- Penetration tests
+level: high
+tags:
+- attack.execution
+- attack.t1086
+source: sigma

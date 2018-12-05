@@ -1,0 +1,30 @@
+type: x-detection-rule
+id: x-detection-rule--ed692c4b-5049-4a60-bf50-bf4530a53f3a
+created: '2018-12-04T15:23:00.540Z'
+modified: '2018-12-04T15:23:00.540Z'
+title: Process Setting Hidden and System File Attributes
+revision: '1'
+revNotes:
+- Initial commit
+status: experimental
+description: This rule is designed to alert on +s or +h from process attrib.exe
+author: Brandon Martin and Nick Ascoli
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  condition: selection
+  selection:
+    CommandLine:
+    - '*+s*'
+    - '*+h*'
+    EventID: 1
+    Image:
+    - '*\attrib.exe'
+falsepositives:
+- unknown
+level: medium
+tags:
+- attack.execution
+enrichment: None
+source: TALR

@@ -1,0 +1,25 @@
+type: x-detection-rule
+id: x-detection-rule--8c2f65f3-c3bf-4abf-b67d-82007e1b82c4
+created: '2018-12-03T23:30:44.901Z'
+modified: '2018-12-03T23:30:44.901Z'
+title: Suspicious TSCON Start
+status: experimental
+description: Detects a tscon.exe start as LOCAL SYSTEM
+reference:
+- http://www.korznikov.com/2017/03/0-day-or-feature-privilege-escalation.html
+- https://medium.com/@networksecurity/rdp-hijacking-how-to-hijack-rds-and-remoteapp-sessions-transparently-to-move-through-an-da2a1e73a5f6
+author: Florian Roth
+date: 2018/03/17
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  condition: selection
+  selection:
+    EventID: 1
+    Image: '*\tscon.exe'
+    User: NT AUTHORITY\SYSTEM
+falsepositives:
+- Unknown
+level: high
+source: sigma

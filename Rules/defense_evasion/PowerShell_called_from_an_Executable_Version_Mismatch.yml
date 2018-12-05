@@ -1,0 +1,32 @@
+type: x-detection-rule
+id: x-detection-rule--8390c12c-99d6-4101-b4c3-18d507d2db28
+created: '2018-12-03T23:30:44.694Z'
+modified: '2018-12-03T23:30:44.694Z'
+title: PowerShell called from an Executable Version Mismatch
+status: experimental
+description: Detects PowerShell called from an executable by the version mismatch
+  method
+references:
+- https://adsecurity.org/?p=2921
+author: Sean Metcalf (source), Florian Roth (rule)
+logsource:
+  product: windows
+  service: powershell-classic
+detection:
+  condition: selection1
+  selection1:
+    EngineVersion:
+    - 2.*
+    - 4.*
+    - 5.*
+    EventID: 400
+    HostVersion: 3.*
+falsepositives:
+- Penetration Tests
+- Unknown
+level: high
+tags:
+- attack.defense_evasion
+- attack.execution
+- attack.t1086
+source: sigma

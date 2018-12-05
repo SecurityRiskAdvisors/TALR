@@ -1,0 +1,29 @@
+type: x-detection-rule
+id: x-detection-rule--70e15b5a-6eda-4709-9935-e7324b39823c
+created: '2018-12-03T23:30:44.774Z'
+modified: '2018-12-03T23:30:44.774Z'
+title: Microsoft Workflow Compiler
+status: experimental
+description: Detects invocation of Microsoft Workflow Compiler, which may permit
+  the execution of arbitrary unsigned code.
+references:
+- https://posts.specterops.io/arbitrary-unsigned-code-execution-vector-in-microsoft-workflow-compiler-exe-3d9294bc5efb
+author: Nik Seetharaman
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  condition: selection
+  selection:
+    EventID: 1
+    Image: '*\Microsoft.Workflow.Compiler.exe'
+fields:
+- CommandLine
+- ParentCommandLine
+falsepositives:
+- Legitimate MWC use (unlikely in modern enterprise environments)
+level: high
+tags:
+- attack.defense_evasion
+- attack.execution
+source: sigma

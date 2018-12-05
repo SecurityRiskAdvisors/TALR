@@ -1,0 +1,33 @@
+type: x-detection-rule
+id: x-detection-rule--72b3bc38-d48d-488c-a117-3efc9c74db7a
+created: '2018-12-03T23:30:44.838Z'
+modified: '2018-12-03T23:30:44.838Z'
+title: Executable in ADS
+status: experimental
+description: Detects the creation of an ADS data stream that contains an executable
+  (non-empty imphash)
+references:
+- https://twitter.com/0xrawsec/status/1002478725605273600?s=21
+author: Florian Roth, @0xrawsec
+date: 2018/06/03
+logsource:
+  product: windows
+  description: 'Requirements: Sysmon config with Imphash logging activated'
+  service: sysmon
+detection:
+  condition: selection and not filter
+  filter:
+    Imphash: '00000000000000000000000000000000'
+  selection:
+    EventID: 15
+fields:
+- TargetFilename
+- Image
+falsepositives:
+- unknown
+level: critical
+tags:
+- attack.defense_evasion
+- attack.t1027
+- attack.s0139
+source: sigma

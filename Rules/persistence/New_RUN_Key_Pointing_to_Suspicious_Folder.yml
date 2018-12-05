@@ -1,0 +1,39 @@
+type: x-detection-rule
+id: x-detection-rule--ae5e6f21-8c90-494b-86e8-86e9520b3129
+created: '2018-12-03T23:30:44.830Z'
+modified: '2018-12-03T23:30:44.830Z'
+title: New RUN Key Pointing to Suspicious Folder
+status: experimental
+description: Detects suspicious new RUN key element pointing to an executable in
+  a suspicious folder
+references:
+- https://www.fireeye.com/blog/threat-research/2018/08/fin7-pursuing-an-enigmatic-and-evasive-global-criminal-operation.html
+author: Florian Roth, Markus Neis
+date: 2018/25/08
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  condition: selection
+  selection:
+    EventID: 13
+    Details:
+    - C:\Windows\Temp\*
+    - '*\AppData\*'
+    - C:\$Recycle.bin\*
+    - C:\Temp\*
+    - C:\Users\Public\*
+    - C:\Users\Default\*
+    - C:\Users\Desktop\*
+    TargetObject:
+    - '*\SOFTWARE\Microsoft\Windows\CurrentVersion\Run\*'
+    - '*\SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce\*'
+fields:
+- Image
+falsepositives:
+- Software with rare behaviour
+level: high
+tags:
+- attack.persistence
+- attack.t1060
+source: sigma

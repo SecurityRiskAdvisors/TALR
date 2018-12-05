@@ -1,0 +1,53 @@
+type: x-detection-rule
+id: x-detection-rule--c1001be7-4b60-4ea5-ae76-404be2fc936f
+created: '2018-12-03T23:30:44.495Z'
+modified: '2018-12-03T23:30:44.495Z'
+action: global
+title: PowerShell Base64 Encoded Shellcode
+status: experimental
+description: Detects Base64 encoded Shellcode
+references:
+- https://twitter.com/cyb3rops/status/1063072865992523776
+author: Florian Roth
+date: 2018/11/17
+detection:
+  condition: selection1 and selection2
+falsepositives:
+- Unknown
+level: critical
+tags:
+- attack.defense_evasion
+- attack.t1036
+type: x-detection-rule
+id: x-detection-rule--abfc9fa6-18ad-4452-a1ff-d65403cb898d
+created: '2018-12-03T23:30:44.496Z'
+modified: '2018-12-03T23:30:44.496Z'
+logsource:
+  product: windows
+  description: 'Requirements: Audit Policy : Detailed Tracking > Audit Process creation,
+    Group Policy : Administrative Templates\System\Audit Process Creation'
+  service: security
+detection:
+  selection1:
+    EventID: 4688
+    ProcesssCommandLine: '*AAAAYInlM*'
+  selection2:
+    ProcesssCommandLine:
+    - '*OiCAAAAYInlM*'
+    - '*OiJAAAAYInlM*'
+type: x-detection-rule
+id: x-detection-rule--79573189-3969-41f0-aa17-dca93da1423e
+created: '2018-12-03T23:30:44.497Z'
+modified: '2018-12-03T23:30:44.497Z'
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection1:
+    CommandLine: '*AAAAYInlM*'
+    EventID: 1
+  selection2:
+    CommandLine:
+    - '*OiCAAAAYInlM*'
+    - '*OiJAAAAYInlM*'
+source: sigma

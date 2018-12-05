@@ -1,0 +1,30 @@
+type: x-detection-rule
+id: x-detection-rule--2dedaabf-d4aa-47f2-bf0b-025a199802c2
+created: '2018-12-04T15:23:00.533Z'
+modified: '2018-12-04T15:23:00.533Z'
+title: Scheduled Task Query
+revision: '1'
+revNotes:
+- Initial commit
+status: experimental
+description: This rule is designed to alert on a schedule task query being run
+author: Brandon Martin and Nick Ascoli
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  condition: selection
+  selection:
+    CommandLine:
+    - '*/query /tn'
+    EventID: 1
+    Image:
+    - '*\supportassistagent.exe'
+    - '*\pcdrcui.exe'
+falsepositives:
+- unknown
+level: medium
+tags:
+- attack.execution
+enrichment: None
+source: TALR

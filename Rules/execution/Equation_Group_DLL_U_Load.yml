@@ -1,0 +1,54 @@
+type: x-detection-rule
+id: x-detection-rule--175fe24a-f67b-4635-8b63-c133fc9db96b
+created: '2018-12-03T23:30:44.369Z'
+modified: '2018-12-03T23:30:44.369Z'
+action: global
+title: Equation Group DLL_U Load
+description: Detects a specific tool and export used by EquationGroup
+references:
+- https://github.com/adamcaudill/EquationGroupLeak/search?utf8=%E2%9C%93&q=dll_u&type=
+- https://securelist.com/apt-slingshot/84312/
+- https://twitter.com/cyb3rops/status/972186477512839170
+author: Florian Roth
+date: 2018/03/10
+detection:
+  condition: 1 of them
+  selection1:
+    CommandLine: '*,dll_u'
+    Image: '*\rundll32.exe'
+  selection2:
+    CommandLine: '* -export dll_u *'
+falsepositives:
+- Unknown
+level: critical
+tags:
+- attack.execution
+- attack.g0020
+- attack.t1059
+type: x-detection-rule
+id: x-detection-rule--c3882ecc-d34a-413f-852b-ae02b087c9f3
+created: '2018-12-03T23:30:44.370Z'
+modified: '2018-12-03T23:30:44.370Z'
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection1:
+    EventID: 1
+  selection2:
+    EventID: 1
+type: x-detection-rule
+id: x-detection-rule--0591ac3d-8c94-4304-8f69-ea5151a2f3d1
+created: '2018-12-03T23:30:44.370Z'
+modified: '2018-12-03T23:30:44.370Z'
+logsource:
+  product: windows
+  description: 'Requirements: Audit Policy : Detailed Tracking > Audit Process creation,
+    Group Policy : Administrative Templates\System\Audit Process Creation'
+  service: security
+detection:
+  selection1:
+    EventID: 4688
+  selection2:
+    EventID: 4688
+source: sigma

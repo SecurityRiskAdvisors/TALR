@@ -1,0 +1,47 @@
+type: x-detection-rule
+id: x-detection-rule--33e18d29-c07d-499d-b674-7fed48f2cd58
+created: '2018-12-03T23:30:44.513Z'
+modified: '2018-12-03T23:30:44.513Z'
+action: global
+title: Sysprep on AppData Folder
+status: experimental
+description: Detects suspicious sysprep process start with AppData folder as target
+  (as used by Trojan Syndicasec in Thrip report by Symantec)
+references:
+- https://www.symantec.com/blogs/threat-intelligence/thrip-hits-satellite-telecoms-defense-targets
+- https://app.any.run/tasks/61a296bb-81ad-4fee-955f-3b399f4aaf4b
+author: Florian Roth
+date: 2018/06/22
+detection:
+  condition: selection
+  selection:
+    CommandLine:
+    - '*\sysprep.exe *\AppData\*'
+    - sysprep.exe *\AppData\*
+falsepositives:
+- False positives depend on scripts and administrative tools used in the monitored
+  environment
+level: medium
+type: x-detection-rule
+id: x-detection-rule--2f34691e-817e-4fe9-906c-83bc4eaa0e8c
+created: '2018-12-03T23:30:44.514Z'
+modified: '2018-12-03T23:30:44.514Z'
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection:
+    EventID: 1
+type: x-detection-rule
+id: x-detection-rule--ff0eb06d-f72c-43fa-90e2-df6e540adaeb
+created: '2018-12-03T23:30:44.514Z'
+modified: '2018-12-03T23:30:44.514Z'
+logsource:
+  product: windows
+  description: 'Requirements: Audit Policy : Detailed Tracking > Audit Process creation,
+    Group Policy : Administrative Templates\System\Audit Process Creation'
+  service: security
+detection:
+  selection:
+    EventID: 4688
+source: sigma

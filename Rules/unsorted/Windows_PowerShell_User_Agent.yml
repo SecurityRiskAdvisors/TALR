@@ -1,0 +1,25 @@
+type: x-detection-rule
+id: x-detection-rule--7191ede0-373a-41dc-ae5d-3d35795a8999
+created: '2018-12-03T23:30:44.421Z'
+modified: '2018-12-03T23:30:44.421Z'
+title: Windows PowerShell User Agent
+status: experimental
+description: Detects Windows PowerShell Web Access
+references:
+- https://msdn.microsoft.com/powershell/reference/5.1/microsoft.powershell.utility/Invoke-WebRequest
+author: Florian Roth
+logsource:
+  category: proxy
+detection:
+  condition: selection
+  selection:
+    UserAgent: '* WindowsPowerShell/*'
+fields:
+- ClientIP
+- URL
+- UserAgent
+falsepositives:
+- Administrative scripts that download files from the Internet
+- Administrative scripts that retrieve certain website contents
+level: medium
+source: sigma

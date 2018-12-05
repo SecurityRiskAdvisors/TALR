@@ -1,0 +1,28 @@
+type: x-detection-rule
+id: x-detection-rule--b0068d5b-11b4-46f6-8a1b-8fa1532570e1
+created: '2018-12-03T23:30:44.754Z'
+modified: '2018-12-03T23:30:44.754Z'
+title: Processes created by MMC
+status: experimental
+description: Processes started by MMC could be a sign of lateral movement using
+  MMC application COM object
+references:
+- https://enigma0x3.net/2017/01/05/lateral-movement-using-the-mmc20-application-com-object/
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  condition: selection and not exclusion
+  exclusion:
+    CommandLine: '*\RunCmd.cmd'
+  selection:
+    EventID: 1
+    Image: '*\cmd.exe'
+    ParentImage: '*\mmc.exe'
+fields:
+- CommandLine
+- ParentCommandLine
+falsepositives:
+- unknown
+level: medium
+source: sigma

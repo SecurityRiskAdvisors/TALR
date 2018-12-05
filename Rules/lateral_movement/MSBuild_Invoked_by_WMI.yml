@@ -1,0 +1,34 @@
+type: x-detection-rule
+id: x-detection-rule--f6957f7b-30f7-4f03-98d5-efead516be3a
+created: '2018-11-15T23:46:27.168Z'
+modified: '2018-11-15T23:46:27.168Z'
+title: MSBuild Invoked by WMI
+revision: '1'
+revNotes:
+- Initial commit
+status: experimental
+description: This rule is designed to alert on the use of MSBUILD.EXE to move laterally
+  through WMI, for example; wmic.exe /node:<IP> process call create "msbuild.exe
+  -arguments"
+author: Tyler Fredrick and Kevin Foster
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  condition: selection
+  selection:
+    EventID: 1
+    Image:
+    - '*\MSBUILD.exe'
+    ParentImage:
+    - '*\WMIPVRSE.EXE'
+fields:
+- CommandLine
+- ParentCommandLine
+falsepositives:
+- unknown
+level: high
+tags:
+- attack.lateral_movement
+enrichment: None
+source: TALR

@@ -1,0 +1,39 @@
+type: x-detection-rule
+id: x-detection-rule--00ce5ac3-1b93-4aa7-aec2-76e851232dcf
+created: '2018-12-03T23:30:44.887Z'
+modified: '2018-12-03T23:30:44.887Z'
+title: WScript or CScript Dropper
+status: experimental
+description: Detects wscript/cscript executions of scripts located in user directories
+author: Margaritis Dimitrios (idea), Florian Roth (rule)
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  condition: selection
+  falsepositive:
+    ParentImage: '*\winzip*'
+  selection:
+    CommandLine:
+    - '* C:\Users\*.jse *'
+    - '* C:\Users\*.vbe *'
+    - '* C:\Users\*.js *'
+    - '* C:\Users\*.vba *'
+    - '* C:\Users\*.vbs *'
+    - '* C:\ProgramData\*.jse *'
+    - '* C:\ProgramData\*.vbe *'
+    - '* C:\ProgramData\*.js *'
+    - '* C:\ProgramData\*.vba *'
+    - '* C:\ProgramData\*.vbs *'
+    EventID: 1
+    Image:
+    - '*\wscript.exe'
+    - '*\cscript.exe'
+fields:
+- CommandLine
+- ParentCommandLine
+falsepositives:
+- Winzip
+- Other self-extractors
+level: high
+source: sigma

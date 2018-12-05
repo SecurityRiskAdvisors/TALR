@@ -1,0 +1,34 @@
+type: x-detection-rule
+id: x-detection-rule--33149f26-0c67-47b3-b703-1e4de99438da
+created: '2018-12-03T23:30:44.494Z'
+modified: '2018-12-03T23:30:44.494Z'
+title: Secure Deletion with SDelete
+status: experimental
+description: Detects renaming of file while deletion with SDelete tool
+references:
+- https://jpcertcc.github.io/ToolAnalysisResultSheet
+- https://www.jpcert.or.jp/english/pub/sr/ir_research.html
+- https://technet.microsoft.com/en-us/en-en/sysinternals/sdelete.aspx
+author: Thomas Patzke
+logsource:
+  product: windows
+  service: security
+detection:
+  condition: selection
+  selection:
+    EventID:
+    - 4656
+    - 4663
+    - 4658
+    ObjectName:
+    - '*.AAA'
+    - '*.ZZZ'
+falsepositives:
+- Legitime usage of SDelete
+level: medium
+tags:
+- attack.defense_evasion
+- attack.t1107
+- attack.t1116
+- attack.s0195
+source: sigma

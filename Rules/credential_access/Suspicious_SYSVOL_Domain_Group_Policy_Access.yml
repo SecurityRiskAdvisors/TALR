@@ -1,0 +1,46 @@
+type: x-detection-rule
+id: x-detection-rule--879226c9-5106-4345-b334-a7c0f7a125f7
+created: '2018-12-03T23:30:44.578Z'
+modified: '2018-12-03T23:30:44.578Z'
+action: global
+title: Suspicious SYSVOL Domain Group Policy Access
+status: experimental
+description: Detects Access to Domain Group Policies stored in SYSVOL
+references:
+- https://adsecurity.org/?p=2288
+- https://www.hybrid-analysis.com/sample/f2943f5e45befa52fb12748ca7171d30096e1d4fc3c365561497c618341299d5?environmentId=100
+author: Markus Neis
+date: 2018/04/09
+detection:
+  condition: selection
+  selection:
+    CommandLine: '*\SYSVOL\*\policies\*'
+falsepositives:
+- administrative activity
+level: medium
+tags:
+- attack.credential_access
+- attack.t1003
+type: x-detection-rule
+id: x-detection-rule--773a74a9-9c17-47ea-8480-06a08aa0e0dd
+created: '2018-12-03T23:30:44.579Z'
+modified: '2018-12-03T23:30:44.579Z'
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection:
+    EventID: 1
+type: x-detection-rule
+id: x-detection-rule--f7fd07e9-16eb-4c8a-8197-06af8a8810db
+created: '2018-12-03T23:30:44.580Z'
+modified: '2018-12-03T23:30:44.580Z'
+logsource:
+  product: windows
+  description: 'Requirements: Audit Policy : Detailed Tracking > Audit Process creation,
+    Group Policy : Administrative Templates\System\Audit Process Creation'
+  service: security
+detection:
+  selection:
+    EventID: 4688
+source: sigma

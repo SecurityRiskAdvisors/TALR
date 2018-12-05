@@ -1,0 +1,39 @@
+type: x-detection-rule
+id: x-detection-rule--99c98c04-eba1-4bec-b426-67820f5cf4f9
+created: '2018-12-04T15:23:00.556Z'
+modified: '2018-12-04T15:23:00.556Z'
+title: Hidden PowerShell with Unusual Parent
+revision: '1'
+revNotes:
+- Initial commit
+status: experimental
+description: This rule is designed to alert on the use of hidden powershell, with
+  a strange parent process
+author: Brandon Martin and Nick Ascoli
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  condition: selection
+  selection:
+    CommandLine:
+    - '*-nop hidden *'
+    - '*hidden*'
+    EventID: 1
+    Image:
+    - '*\powershell.exe'
+    ParentImage:
+    - '*\wmiprvse.exe'
+    - '*\winword.exe'
+    - '*\excel.exe'
+    - '*\mshta.exe'
+    - '*\mspub.exe'
+    - '*\powerpnt.exe'
+    - '*\rundll32.exe'
+falsepositives:
+- unknown
+level: high
+tags:
+- attack.execution
+enrichment: None
+source: TALR

@@ -1,0 +1,25 @@
+type: x-detection-rule
+id: x-detection-rule--ccbb7ae4-75e3-4696-abe6-fa6a82638911
+created: '2018-12-03T23:30:44.531Z'
+modified: '2018-12-03T23:30:44.531Z'
+title: USB Device Plugged
+status: experimental
+description: Detects plugged USB devices
+references:
+- https://df-stream.com/2014/01/the-windows-7-event-log-and-usb-device/
+- https://www.techrepublic.com/article/how-to-track-down-usb-flash-drive-usage-in-windows-10s-event-viewer/
+author: Florian Roth
+logsource:
+  product: windows
+  service: driver-framework
+detection:
+  condition: selection
+  selection:
+    EventID:
+    - 2003
+    - 2100
+    - 2102
+falsepositives:
+- Legitimate administrative activity
+level: low
+source: sigma

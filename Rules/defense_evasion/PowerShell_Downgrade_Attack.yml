@@ -1,0 +1,30 @@
+type: x-detection-rule
+id: x-detection-rule--20c56d2a-e251-45d6-b577-f04a7e61d313
+created: '2018-12-03T23:30:44.686Z'
+modified: '2018-12-03T23:30:44.686Z'
+title: PowerShell Downgrade Attack
+status: experimental
+description: Detects PowerShell downgrade attack by comparing the host versions
+  with the actually used engine version 2.0
+references:
+- http://www.leeholmes.com/blog/2017/03/17/detecting-and-preventing-powershell-downgrade-attacks/
+author: Florian Roth (rule), Lee Holmes (idea)
+logsource:
+  product: windows
+  service: powershell-classic
+detection:
+  condition: selection and not filter
+  filter:
+    HostVersion: 2.*
+  selection:
+    EngineVersion: 2.*
+    EventID: 400
+falsepositives:
+- Penetration Test
+- Unknown
+level: medium
+tags:
+- attack.defense_evasion
+- attack.execution
+- attack.t1086
+source: sigma

@@ -1,0 +1,29 @@
+type: x-detection-rule
+id: x-detection-rule--3de1a11a-ff6a-4155-8fcc-026b46bd9b73
+created: '2018-12-03T23:30:44.731Z'
+modified: '2018-12-03T23:30:44.731Z'
+title: PowerShell Rundll32 Remote Thread Creation
+status: experimental
+description: Detects PowerShell remote thread creation in Rundll32.exe
+references:
+- https://www.fireeye.com/blog/threat-research/2018/06/bring-your-own-land-novel-red-teaming-technique.html
+author: Florian Roth
+date: 2018/06/25
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  condition: selection
+  selection:
+    EventID: 8
+    SourceImage: '*\powershell.exe'
+    TargetImage: '*\rundll32.exe'
+falsepositives:
+- Unkown
+level: high
+tags:
+- attack.defense_evasion
+- attack.execution
+- attack.t1085
+- attack.t1086
+source: sigma

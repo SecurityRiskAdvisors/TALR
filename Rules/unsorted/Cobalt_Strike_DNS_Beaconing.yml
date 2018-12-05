@@ -1,0 +1,23 @@
+type: x-detection-rule
+id: x-detection-rule--5b614591-dc0a-44ed-8a84-b04a4dae213c
+created: '2018-12-03T23:30:44.397Z'
+modified: '2018-12-03T23:30:44.397Z'
+title: Cobalt Strike DNS Beaconing
+status: experimental
+description: Detects suspicious DNS queries known from Cobalt Strike beacons
+references:
+- https://www.icebrg.io/blog/footprints-of-fin7-tracking-actor-patterns
+author: Florian Roth
+date: 2018/05/10
+logsource:
+  category: dns
+detection:
+  condition: selection
+  selection:
+    query:
+    - aaa.stage.*
+    - post.1*
+falsepositives:
+- Unknown
+level: high
+source: sigma

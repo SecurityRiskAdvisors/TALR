@@ -1,0 +1,31 @@
+type: x-detection-rule
+id: x-detection-rule--664d0821-3efe-4bc5-91e0-c621b0904606
+created: '2018-12-03T23:30:44.692Z'
+modified: '2018-12-03T23:30:44.692Z'
+title: Suspicious PowerShell Invocations - Generic
+status: experimental
+description: Detects suspicious PowerShell invocation command parameters
+author: Florian Roth (rule)
+logsource:
+  product: windows
+  service: powershell
+detection:
+  condition: all of them
+  encoded:
+  - ' -enc '
+  - ' -EncodedCommand '
+  hidden:
+  - ' -w hidden '
+  - ' -window hidden '
+  - ' - windowstyle hidden '
+  noninteractive:
+  - ' -noni '
+  - ' -noninteractive '
+falsepositives:
+- Penetration tests
+- Very special / sneaky PowerShell scripts
+level: high
+tags:
+- attack.execution
+- attack.t1086
+source: sigma

@@ -1,0 +1,57 @@
+type: x-detection-rule
+id: x-detection-rule--0cbf5b1d-1094-441d-8d8a-f26381a034f3
+created: '2018-12-03T23:30:44.538Z'
+modified: '2018-12-03T23:30:44.538Z'
+title: Kerberos Manipulation
+description: This method triggers on rare Kerberos Failure Codes caused by manipulations
+  of Kerberos messages
+author: Florian Roth
+logsource:
+  product: windows
+  service: security
+detection:
+  condition: selection
+  selection:
+    EventID:
+    - 675
+    - 4768
+    - 4769
+    - 4771
+    FailureCode:
+    - '0x9'
+    - '0xA'
+    - '0xB'
+    - '0xF'
+    - '0x10'
+    - '0x11'
+    - '0x13'
+    - '0x14'
+    - '0x1A'
+    - '0x1F'
+    - '0x21'
+    - '0x22'
+    - '0x23'
+    - '0x24'
+    - '0x26'
+    - '0x27'
+    - '0x28'
+    - '0x29'
+    - '0x2C'
+    - '0x2D'
+    - '0x2E'
+    - '0x2F'
+    - '0x31'
+    - '0x32'
+    - '0x3E'
+    - '0x3F'
+    - '0x40'
+    - '0x41'
+    - '0x43'
+    - '0x44'
+falsepositives:
+- Faulty legacy applications
+level: high
+tags:
+- attack.credential_access
+- attack.t1212
+source: sigma

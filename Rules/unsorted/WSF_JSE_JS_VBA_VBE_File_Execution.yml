@@ -1,0 +1,31 @@
+type: x-detection-rule
+id: x-detection-rule--697ca830-f886-48a0-b16b-895cd7a01fe6
+created: '2018-12-03T23:30:44.850Z'
+modified: '2018-12-03T23:30:44.850Z'
+title: WSF/JSE/JS/VBA/VBE File Execution
+status: experimental
+description: Detects suspicious file execution by wscript and cscript
+author: Michael Haag
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  condition: selection
+  selection:
+    CommandLine:
+    - '*.jse'
+    - '*.vbe'
+    - '*.js'
+    - '*.vba'
+    EventID: 1
+    Image:
+    - '*\wscript.exe'
+    - '*\cscript.exe'
+fields:
+- CommandLine
+- ParentCommandLine
+falsepositives:
+- Will need to be tuned. I recommend adding the user profile path in CommandLine
+  if it is getting too noisy.
+level: medium
+source: sigma

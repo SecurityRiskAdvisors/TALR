@@ -1,0 +1,81 @@
+type: x-detection-rule
+id: x-detection-rule--cf81025b-3103-4b5d-a235-65f64afca12d
+created: '2018-12-03T23:30:44.504Z'
+modified: '2018-12-03T23:30:44.504Z'
+action: global
+title: Quick Execution of a Series of Suspicious Commands
+status: experimental
+description: Detects multiple suspicious process in a limited timeframe
+references:
+- https://car.mitre.org/wiki/CAR-2013-04-002
+author: juju4
+detection:
+  condition: selection | count() by MachineName > 5
+  selection:
+    CommandLine:
+    - arp.exe
+    - at.exe
+    - attrib.exe
+    - cscript.exe
+    - dsquery.exe
+    - hostname.exe
+    - ipconfig.exe
+    - mimikatz.exe
+    - nbstat.exe
+    - net.exe
+    - netsh.exe
+    - nslookup.exe
+    - ping.exe
+    - quser.exe
+    - qwinsta.exe
+    - reg.exe
+    - runas.exe
+    - sc.exe
+    - schtasks.exe
+    - ssh.exe
+    - systeminfo.exe
+    - taskkill.exe
+    - telnet.exe
+    - tracert.exe
+    - wscript.exe
+    - xcopy.exe
+    - pscp.exe
+    - copy.exe
+    - robocopy.exe
+    - certutil.exe
+    - vssadmin.exe
+    - powershell.exe
+    - wevtutil.exe
+    - psexec.exe
+    - bcedit.exe
+    - wbadmin.exe
+    - icacls.exe
+    - diskpart.exe
+  timeframe: 5m
+falsepositives:
+- False positives depend on scripts and administrative tools used in the monitored
+  environment
+level: low
+type: x-detection-rule
+id: x-detection-rule--7379778e-3230-4ec1-93ae-565ac5bd1996
+created: '2018-12-03T23:30:44.505Z'
+modified: '2018-12-03T23:30:44.505Z'
+logsource:
+  product: windows
+  description: 'Requirements: Audit Policy : Detailed Tracking > Audit Process creation,
+    Group Policy : Administrative Templates\System\Audit Process Creation'
+  service: security
+detection:
+  selection:
+    EventID: 4688
+type: x-detection-rule
+id: x-detection-rule--e595f651-5792-44eb-9ca8-09e9014521a8
+created: '2018-12-03T23:30:44.506Z'
+modified: '2018-12-03T23:30:44.506Z'
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection:
+    EventID: 1
+source: sigma

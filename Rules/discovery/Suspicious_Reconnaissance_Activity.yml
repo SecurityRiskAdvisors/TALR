@@ -1,0 +1,30 @@
+type: x-detection-rule
+id: x-detection-rule--e4132405-df40-4b2a-8b51-e3d543f5813a
+created: '2018-12-03T23:30:44.827Z'
+modified: '2018-12-03T23:30:44.827Z'
+title: Suspicious Reconnaissance Activity
+status: experimental
+description: Detects suspicious command line activity on Windows systems
+author: Florian Roth
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  condition: selection
+  selection:
+    CommandLine:
+    - net group "domain admins" /domain
+    - net localgroup administrators
+    EventID: 1
+fields:
+- CommandLine
+- ParentCommandLine
+falsepositives:
+- Inventory tool runs
+- Penetration tests
+- Administrative activity
+level: medium
+analysis:
+  recommendation: Check if the user that executed the commands is suspicious (e.g.
+    service accounts, LOCAL_SYSTEM)
+source: sigma

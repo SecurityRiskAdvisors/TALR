@@ -1,0 +1,24 @@
+type: x-detection-rule
+id: x-detection-rule--f8a6b9ea-044a-4280-99ca-bea3537bbf68
+created: '2018-12-03T23:30:44.419Z'
+modified: '2018-12-03T23:30:44.419Z'
+title: Empty User Agent
+status: experimental
+description: Detects suspicious empty user agent strings in proxy logs
+references:
+- https://twitter.com/Carlos_Perez/status/883455096645931008
+author: Florian Roth
+logsource:
+  category: proxy
+detection:
+  condition: selection
+  selection:
+    UserAgent: ''
+fields:
+- ClientIP
+- URL
+- UserAgent
+falsepositives:
+- Unknown
+level: medium
+source: sigma

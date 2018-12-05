@@ -1,0 +1,45 @@
+type: x-detection-rule
+id: x-detection-rule--b350c899-09ab-447a-a653-c41e0b5c02fd
+created: '2018-12-03T23:30:44.362Z'
+modified: '2018-12-03T23:30:44.362Z'
+action: global
+title: Sofacy Zebrocy
+description: Detects Sofacy's Zebrocy malware execution
+references:
+- https://app.any.run/tasks/54acca9a-394e-4384-a0c8-91a96d36c81d
+author: Florian Roth
+date: 2018/03/10
+detection:
+  condition: selection
+falsepositives:
+- Unknown
+level: critical
+tags:
+- attack.execution
+- attack.g0020
+- attack.t1059
+type: x-detection-rule
+id: x-detection-rule--24e58913-d562-4bd2-bda6-9d187170deb6
+created: '2018-12-03T23:30:44.363Z'
+modified: '2018-12-03T23:30:44.363Z'
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection:
+    CommandLine: '*cmd.exe /c SYSTEMINFO & TASKLIST'
+    EventID: 1
+type: x-detection-rule
+id: x-detection-rule--cfd8eda9-4340-4591-91e7-bb0f270f3ab7
+created: '2018-12-03T23:30:44.364Z'
+modified: '2018-12-03T23:30:44.364Z'
+logsource:
+  product: windows
+  description: 'Requirements: Audit Policy : Detailed Tracking > Audit Process creation,
+    Group Policy : Administrative Templates\System\Audit Process Creation'
+  service: security
+detection:
+  selection:
+    EventID: 4688
+    ProcessCommandLine: '*cmd.exe /c SYSTEMINFO & TASKLIST'
+source: sigma

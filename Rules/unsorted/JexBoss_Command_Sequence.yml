@@ -1,0 +1,22 @@
+type: x-detection-rule
+id: x-detection-rule--3823518d-5137-4b0b-bf87-986df4c50a39
+created: '2018-12-03T23:30:44.320Z'
+modified: '2018-12-03T23:30:44.320Z'
+title: JexBoss Command Sequence
+description: Detects suspicious command sequence that JexBoss
+references:
+- https://www.us-cert.gov/ncas/analysis-reports/AR18-312A
+author: Florian Roth
+date: 2017/08/24
+logsource:
+  product: linux
+detection:
+  condition: selection1 and selection2
+  selection1:
+  - bash -c /bin/bash
+  selection2:
+  - '&/dev/tcp/'
+falsepositives:
+- Unknown
+level: high
+source: sigma

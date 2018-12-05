@@ -1,0 +1,32 @@
+type: x-detection-rule
+id: x-detection-rule--61871530-f11c-439f-bfbc-e5fa9a4c5117
+created: '2018-12-04T15:23:00.506Z'
+modified: '2018-12-04T15:23:00.506Z'
+title: Office applications writing an exe via WMI
+revision: '1'
+revNotes:
+- Initial commit
+status: experimental
+description: This rule is designed to alert on the use of microsoft apps to write
+  an exe and drop it via WMI
+author: Brandon Martin and Nick Ascoli
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  condition: selection
+  selection:
+    EventID: 7
+    Image:
+    - '*\winword.exe'
+    - '*\excel.exe'
+    - '*\powerpnt.exe'
+    ImageLoaded:
+    - '*\wmiutils.dll'
+falsepositives:
+- unknown
+level: high
+tags:
+- attack.execution
+enrichment: None
+source: TALR

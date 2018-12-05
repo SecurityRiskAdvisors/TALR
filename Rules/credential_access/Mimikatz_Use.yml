@@ -1,0 +1,32 @@
+type: x-detection-rule
+id: x-detection-rule--1ef06158-314e-499b-b093-a46309d68ccd
+created: '2018-12-03T23:30:44.587Z'
+modified: '2018-12-03T23:30:44.587Z'
+title: Mimikatz Use
+description: This method detects mimikatz keywords in different Eventlogs (some
+  of them only appear in older Mimikatz version that are however still used by different
+  threat groups)
+author: Florian Roth
+logsource:
+  product: windows
+detection:
+  condition: keywords
+  keywords:
+  - mimikatz
+  - mimilib
+  - <3 eo.oe
+  - eo.oe.kiwi
+  - privilege::debug
+  - sekurlsa::logonpasswords
+  - lsadump::sam
+  - mimidrv.sys
+falsepositives:
+- Naughty administrators
+- Penetration test
+level: critical
+tags:
+- attack.s0002
+- attack.t1003
+- attack.lateral_movement
+- attack.credential_access
+source: sigma

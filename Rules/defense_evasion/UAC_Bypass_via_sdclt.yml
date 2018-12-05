@@ -1,0 +1,26 @@
+type: x-detection-rule
+id: x-detection-rule--8bc51622-4f52-4204-a6b0-fa4f466942aa
+created: '2018-12-03T23:30:44.803Z'
+modified: '2018-12-03T23:30:44.803Z'
+title: UAC Bypass via sdclt
+status: experimental
+description: Detects changes to HKCU:\Software\Classes\exefile\shell\runas\command\isolatedCommand
+references:
+- https://enigma0x3.net/2017/03/17/fileless-uac-bypass-using-sdclt-exe/
+author: Omer Yampel
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  condition: selection
+  selection:
+    EventID: 13
+    TargetObject: HKEY_USERS\*\Classes\exefile\shell\runas\command\isolatedCommand
+falsepositives:
+- unknown
+level: high
+tags:
+- attack.defense_evasion
+- attack.privilege_escalation
+- attack.t1088
+source: sigma

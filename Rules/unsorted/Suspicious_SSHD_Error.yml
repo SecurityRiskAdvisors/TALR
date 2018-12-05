@@ -1,0 +1,33 @@
+type: x-detection-rule
+id: x-detection-rule--c6f10d6d-74a9-4c0c-beba-4e3f1f4e7297
+created: '2018-12-03T23:30:44.319Z'
+modified: '2018-12-03T23:30:44.319Z'
+title: Suspicious SSHD Error
+description: Detects suspicious SSH / SSHD error messages that indicate a fatal
+  or suspicious error that could be caused by exploiting attempts
+references:
+- https://github.com/openssh/openssh-portable/blob/master/ssherr.c
+- https://github.com/ossec/ossec-hids/blob/master/etc/rules/sshd_rules.xml
+author: Florian Roth
+date: 2017/06/30
+logsource:
+  product: linux
+  service: sshd
+detection:
+  condition: keywords
+  keywords:
+  - '*unexpected internal error*'
+  - '*unknown or unsupported key type*'
+  - '*invalid certificate signing key*'
+  - '*invalid elliptic curve value*'
+  - '*incorrect signature*'
+  - '*error in libcrypto*'
+  - '*unexpected bytes remain after decoding*'
+  - '*fatal: buffer_get_string: bad string*'
+  - '*Local: crc32 compensation attack*'
+  - '*bad client public DH value*'
+  - '*Corrupted MAC on input*'
+falsepositives:
+- Unknown
+level: medium
+source: sigma

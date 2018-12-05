@@ -1,0 +1,46 @@
+type: x-detection-rule
+id: x-detection-rule--1e3909be-3a50-4c40-9750-c27bef9d0f4c
+created: '2018-12-03T23:30:44.628Z'
+modified: '2018-12-03T23:30:44.628Z'
+title: Active Directory User Backdoors
+description: Detects scenarios where one can control another users or computers
+  account without having to use their credentials.
+references:
+- https://msdn.microsoft.com/en-us/library/cc220234.aspx
+- https://adsecurity.org/?p=3466
+- https://www.harmj0y.net/blog/redteaming/another-word-on-delegation/
+author: '@neu5ron'
+logsource:
+  product: windows
+  description1: 'Requirements: Audit Policy : Account Management > Audit User Account
+    Management, Group Policy : Computer Configuration\Windows Settings\Security
+    Settings\Advanced Audit Policy Configuration\Audit Policies\Account Management\Audit
+    User Account Management'
+  description2: 'Requirements: Audit Policy : DS Access > Audit Directory Service
+    Changes, Group Policy : Computer Configuration\Windows Settings\Security Settings\Advanced
+    Audit Policy Configuration\Audit Policies\DS Access\Audit Directory Service
+    Changes'
+  service: security
+detection:
+  condition: (selection1 and not filter1) or selection2 or selection3 or selection4
+  filter1:
+    AllowedToDelegateTo: null
+  selection1:
+    EventID: 4738
+  selection2:
+    AttributeLDAPDisplayName: msDS-AllowedToDelegateTo
+    EventID: 5136
+  selection3:
+    AttributeLDAPDisplayName: servicePrincipalName
+    EventID: 5136
+    ObjectClass: user
+  selection4:
+    AttributeLDAPDisplayName: msDS-AllowedToActOnBehalfOfOtherIdentity
+    EventID: 5136
+falsepositives:
+- Unknown
+level: high
+tags:
+- attack.t1098
+- attack.credential_access
+source: sigma

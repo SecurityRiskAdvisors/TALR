@@ -1,0 +1,31 @@
+type: x-detection-rule
+id: x-detection-rule--3dc66d0c-3b4d-47b3-af2f-a83c2db00131
+created: '2018-12-03T23:30:44.863Z'
+modified: '2018-12-03T23:30:44.863Z'
+title: Registry Persistence Mechanisms
+description: Detects persistence registry keys
+references:
+- https://oddvar.moe/2018/04/10/persistence-using-globalflags-in-image-file-execution-options-hidden-from-autoruns-exe/
+author: Karneades
+date: 2018/04/11
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  condition: 1 of them
+  selection_reg1:
+    EventID: 13
+    EventType: SetValue
+    TargetObject:
+    - '*\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\*\GlobalFlag'
+    - '*\SOFTWARE\Microsoft\Windows NT\CurrentVersion\SilentProcessExit\*\ReportingMode'
+    - '*\SOFTWARE\Microsoft\Windows NT\CurrentVersion\SilentProcessExit\*\MonitorProcess'
+falsepositives:
+- unknown
+level: critical
+tags:
+- attack.privilege_escalation
+- attack.persistence
+- attack.defense_evasion
+- attack.t1183
+source: sigma

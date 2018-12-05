@@ -1,0 +1,26 @@
+type: x-detection-rule
+id: x-detection-rule--94735329-2032-4344-8de9-a10d4ae19a27
+created: '2018-12-03T23:30:44.639Z'
+modified: '2018-12-03T23:30:44.639Z'
+title: Security Eventlog Cleared
+description: Some threat groups tend to delete the local 'Security' Eventlog using
+  certain utitlities
+author: Florian Roth
+logsource:
+  product: windows
+  service: security
+detection:
+  condition: selection
+  selection:
+    EventID:
+    - 517
+    - 1102
+falsepositives:
+- Rollout of log collection agents (the setup routine often includes a reset of
+  the local Eventlog)
+- System provisioning (system reset before the golden image creation)
+level: high
+tags:
+- attack.defense_evasion
+- attack.t1070
+source: sigma

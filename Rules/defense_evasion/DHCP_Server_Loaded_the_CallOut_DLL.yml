@@ -1,0 +1,27 @@
+type: x-detection-rule
+id: x-detection-rule--fb14daad-96ca-4fb9-bbda-8d3d93f2dd78
+created: '2018-12-03T23:30:44.561Z'
+modified: '2018-12-03T23:30:44.561Z'
+title: DHCP Server Loaded the CallOut DLL
+status: experimental
+description: This rule detects a DHCP server in which a specified Callout DLL (in
+  registry) was loaded
+references:
+- https://blog.3or.de/mimilib-dhcp-server-callout-dll-injection.html
+- https://technet.microsoft.com/en-us/library/cc726884(v=ws.10).aspx
+- https://msdn.microsoft.com/de-de/library/windows/desktop/aa363389(v=vs.85).aspx
+author: Dimitrios Slamaris
+date: 2017/05/15
+logsource:
+  product: windows
+  service: system
+detection:
+  condition: selection
+  selection:
+    EventID: 1033
+falsepositives:
+- Unknown
+level: critical
+tags:
+- attack.defense_evasion
+source: sigma

@@ -1,0 +1,61 @@
+type: x-detection-rule
+id: x-detection-rule--cc7371af-e82b-495e-8392-63144c4c5869
+created: '2018-12-03T23:30:44.589Z'
+modified: '2018-12-03T23:30:44.589Z'
+action: global
+title: Suspicious Rundll32 Activity
+status: experimental
+description: Detects suspicious process related to rundll32 based on arguments
+references:
+- http://www.hexacorn.com/blog/2017/05/01/running-programs-via-proxy-jumping-on-a-edr-bypass-trampoline/
+- https://twitter.com/Hexacorn/status/885258886428725250
+- https://gist.github.com/ryhanson/227229866af52e2d963cf941af135a52
+author: juju4
+detection:
+  condition: selection
+  selection:
+    CommandLine:
+    - '*\rundll32.exe* url.dll,*OpenURL *'
+    - '*\rundll32.exe* url.dll,*OpenURLA *'
+    - '*\rundll32.exe* url.dll,*FileProtocolHandler *'
+    - '*\rundll32.exe* zipfldr.dll,*RouteTheCall *'
+    - '*\rundll32.exe* Shell32.dll,*Control_RunDLL *'
+    - '*\rundll32.exe javascript:*'
+    - '* url.dll,*OpenURL *'
+    - '* url.dll,*OpenURLA *'
+    - '* url.dll,*FileProtocolHandler *'
+    - '* zipfldr.dll,*RouteTheCall *'
+    - '* Shell32.dll,*Control_RunDLL *'
+    - '* javascript:*'
+    - '*.RegisterXLL*'
+falsepositives:
+- False positives depend on scripts and administrative tools used in the monitored
+  environment
+tags:
+- attack.defense_evasion
+- attack.execution
+- attack.t1085
+type: x-detection-rule
+id: x-detection-rule--50d95bc6-dd6c-47bc-98e0-a80551fdb158
+created: '2018-12-03T23:30:44.590Z'
+modified: '2018-12-03T23:30:44.590Z'
+logsource:
+  product: windows
+  description: 'Requirements: Audit Policy : Detailed Tracking > Audit Process creation,
+    Group Policy : Administrative Templates\System\Audit Process Creation'
+  service: security
+detection:
+  selection:
+    EventID: 4688
+type: x-detection-rule
+id: x-detection-rule--9ff1ad00-e5da-4bc7-a8cb-75bc712ce4f6
+created: '2018-12-03T23:30:44.591Z'
+modified: '2018-12-03T23:30:44.591Z'
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection:
+    EventID: 1
+level: medium
+source: sigma

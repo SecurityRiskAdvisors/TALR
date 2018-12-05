@@ -1,0 +1,61 @@
+type: x-detection-rule
+id: x-detection-rule--fb5f94cc-40a1-47af-9a50-62b5178d2b96
+created: '2018-12-03T23:30:44.570Z'
+modified: '2018-12-03T23:30:44.570Z'
+action: global
+title: Suspicious Use of Procdump
+status: experimental
+description: Detects suspicious uses of the SysInternals Procdump utility by using
+  a special command line parameter in combination with the lsass.exe process. This
+  way we're also able to catch cases in which the attacker has renamed the procdump
+  executable.
+references:
+- Internal Research
+author: Florian Roth
+date: 2018/10/30
+detection:
+  condition: selection and selection1 and selection2
+falsepositives:
+- Unlikely, because no one should dump an lsass process memory
+- Another tool that uses the command line switches of Procdump
+level: medium
+tags:
+- attack.defense_evasion
+- attack.t1036
+- attack.credential_access
+- attack.t1003
+type: x-detection-rule
+id: x-detection-rule--1260eb52-41a5-4c98-989f-42497a7e70b2
+created: '2018-12-03T23:30:44.571Z'
+modified: '2018-12-03T23:30:44.571Z'
+logsource:
+  product: windows
+  description: 'Requirements: Audit Policy : Detailed Tracking > Audit Process creation,
+    Group Policy : Administrative Templates\System\Audit Process Creation'
+  service: security
+detection:
+  selection:
+    EventID: 4688
+  selection1:
+    ProcessCommandLine:
+    - '* -ma *'
+  selection2:
+    ProcessCommandLine:
+    - '* lsass.exe*'
+type: x-detection-rule
+id: x-detection-rule--055f331e-0fc8-44d5-a084-99a0789adcc0
+created: '2018-12-03T23:30:44.572Z'
+modified: '2018-12-03T23:30:44.572Z'
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection:
+    EventID: 1
+  selection1:
+    CommandLine:
+    - '* -ma *'
+  selection2:
+    CommandLine:
+    - '* lsass.exe*'
+source: sigma

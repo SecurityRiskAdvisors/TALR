@@ -1,0 +1,30 @@
+type: x-detection-rule
+id: x-detection-rule--a14cbf5e-89b0-48b1-90a4-157bfd932425
+created: '2018-12-04T15:23:00.519Z'
+modified: '2018-12-04T15:23:00.519Z'
+title: WMIC getting OS
+revision: '1'
+revNotes:
+- Initial commit
+status: experimental
+description: This rule is designed to alert on WMIC getting OS information
+author: Brandon Martin and Nick Ascoli
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  condition: selection
+  selection:
+    CommandLine:
+    - '*wmic os get *'
+    - '*os get *'
+    EventID: 1
+    Image:
+    - '*\wmic.exe'
+falsepositives:
+- unknown
+level: medium
+tags:
+- attack.execution
+enrichment: None
+source: TALR

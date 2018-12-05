@@ -1,0 +1,30 @@
+type: x-detection-rule
+id: x-detection-rule--3564add8-9f88-417e-8269-964e59cede6e
+created: '2018-12-03T23:30:44.877Z'
+modified: '2018-12-03T23:30:44.877Z'
+title: Possible Shim Database Persistence via sdbinst.exe
+status: experimental
+description: Detects execution of sdbinst writing to default shim database path
+  C:\Windows\AppPatch\*
+references:
+- https://www.fireeye.com/blog/threat-research/2017/05/fin7-shim-databases-persistence.html
+author: Markus Neis
+date: '2018-08-03'
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  condition: selection
+  selection:
+    CommandLine:
+    - '*\AppPatch\*}.sdb*'
+    EventID: 1
+    Image:
+    - '*\sdbinst.exe'
+falsepositives:
+- Unknown
+level: high
+tags:
+- attack.persistence
+- attack.t1138
+source: sigma

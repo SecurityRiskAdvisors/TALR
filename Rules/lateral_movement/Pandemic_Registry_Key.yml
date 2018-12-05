@@ -1,0 +1,39 @@
+type: x-detection-rule
+id: x-detection-rule--989ea2ec-65d4-4917-bfe2-45259c194940
+created: '2018-12-03T23:30:44.345Z'
+modified: '2018-12-03T23:30:44.345Z'
+title: Pandemic Registry Key
+status: experimental
+description: Detects Pandemic Windows Implant
+references:
+- https://wikileaks.org/vault7/#Pandemic
+- https://twitter.com/MalwareJake/status/870349480356454401
+author: Florian Roth
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  condition: 1 of them
+  selection1:
+    EventID: 13
+    TargetObject:
+    - \REGISTRY\MACHINE\SYSTEM\CurrentControlSet\services\null\Instance*
+    - \REGISTRY\MACHINE\SYSTEM\ControlSet001\services\null\Instance*
+    - \REGISTRY\MACHINE\SYSTEM\ControlSet002\services\null\Instance*
+  selection2:
+    Command: loaddll -a *
+    EventID: 1
+fields:
+- EventID
+- CommandLine
+- ParentCommandLine
+- Image
+- User
+- TargetObject
+falsepositives:
+- unknown
+level: critical
+tags:
+- attack.lateral_movement
+- attack.t1105
+source: sigma

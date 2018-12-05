@@ -1,0 +1,54 @@
+type: x-detection-rule
+id: x-detection-rule--abec3709-a6ac-4060-97bb-2852af685eee
+created: '2018-12-03T23:30:44.551Z'
+modified: '2018-12-03T23:30:44.551Z'
+action: global
+title: Suspicious Svchost Processes
+status: experimental
+description: Detects suspicious svchost processes with parent process that is not
+  services.exe, command line missing -k parameter or running outside Windows folder
+references:
+- https://twitter.com/Moti_B/status/1002280132143394816
+- https://twitter.com/Moti_B/status/1002280287840153601
+author: Florian Roth, @c_APT_ure
+date: 2018/10/26
+falsepositives:
+- Renamed %SystemRoot%s
+level: high
+type: x-detection-rule
+id: x-detection-rule--a33b9b6f-24f7-4248-a321-ef17ecbdff80
+created: '2018-12-03T23:30:44.552Z'
+modified: '2018-12-03T23:30:44.552Z'
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  condition: selection and not ( filter1 or filter2 or filter3 )
+  filter1:
+    ParentImage:
+    - '*\services.exe'
+    - '*\MsMpEng.exe'
+  filter2:
+    CommandLine: '* -k *'
+  filter3:
+    Image: C:\Windows\S*
+  selection:
+    EventID: 1
+    Image: '*\svchost.exe'
+type: x-detection-rule
+id: x-detection-rule--53634949-b960-4930-91ef-821ad1429079
+created: '2018-12-03T23:30:44.554Z'
+modified: '2018-12-03T23:30:44.554Z'
+logsource:
+  product: windows
+  description: 'Requirements: Audit Policy : Detailed Tracking > Audit Process creation,
+    Group Policy : Administrative Templates\System\Audit Process Creation'
+  service: security
+detection:
+  condition: selection and not filter3
+  filter3:
+    NewProcessName: C:\Windows\S*
+  selection:
+    EventID: 4688
+    NewProcessName: '*\svchost.exe'
+source: sigma

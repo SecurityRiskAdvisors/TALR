@@ -1,0 +1,29 @@
+type: x-detection-rule
+id: x-detection-rule--9bb3672f-bb0a-4e8f-b3c9-1e82b0fc1ec3
+created: '2018-12-04T15:23:00.460Z'
+modified: '2018-12-04T15:23:00.460Z'
+title: RegSvr32 making network connections
+revision: '1'
+revNotes:
+- Initial commit
+status: experimental
+description: This rule is designed to alert on RegSvr32 making a network connection
+author: Brandon Martin and Nick Ascoli
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  condition: selection
+  selection:
+    EventID: 3
+    Image:
+    - '*\regsvr32.exe'
+    Initiated:
+    - true
+falsepositives:
+- unknown
+level: medium
+tags:
+- attack.execution
+enrichment: None
+source: TALR

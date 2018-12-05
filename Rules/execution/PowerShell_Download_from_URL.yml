@@ -1,0 +1,30 @@
+type: x-detection-rule
+id: x-detection-rule--aa480f1c-1eee-4e17-9c56-39c8dcc9272e
+created: '2018-12-03T23:30:44.835Z'
+modified: '2018-12-03T23:30:44.835Z'
+title: PowerShell Download from URL
+status: experimental
+description: Detects a Powershell process that contains download commands in its
+  command line string
+author: Florian Roth
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  condition: selection
+  selection:
+    CommandLine:
+    - '*new-object system.net.webclient).downloadstring(*'
+    - '*new-object system.net.webclient).downloadfile(*'
+    EventID: 1
+    Image: '*\powershell.exe'
+fields:
+- CommandLine
+- ParentCommandLine
+falsepositives:
+- unknown
+level: medium
+tags:
+- attack.t1086
+- attack.execution
+source: sigma

@@ -1,0 +1,23 @@
+type: x-detection-rule
+id: x-detection-rule--9333ebdd-f7ac-4e39-a21c-ebce9ea037ee
+created: '2018-12-03T23:30:44.687Z'
+modified: '2018-12-03T23:30:44.687Z'
+title: Suspicious PowerShell Download
+status: experimental
+description: Detects suspicious PowerShell download command
+author: Florian Roth
+logsource:
+  product: windows
+  service: powershell
+detection:
+  condition: keywords
+  keywords:
+  - System.Net.WebClient).DownloadString(
+  - system.net.webclient).downloadfile(
+falsepositives:
+- PowerShell scripts that download content from the Internet
+level: medium
+tags:
+- attack.execution
+- attack.t1086
+source: sigma

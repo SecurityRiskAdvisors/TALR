@@ -1,0 +1,26 @@
+type: x-detection-rule
+id: x-detection-rule--b1bee7d6-fb77-4e24-9640-4e394c0f3dff
+created: '2018-12-03T23:30:44.392Z'
+modified: '2018-12-03T23:30:44.392Z'
+title: Network Scans
+description: Detects many failed connection attempts to different ports or hosts
+author: Thomas Patzke
+logsource:
+  category: firewall
+detection:
+  condition:
+  - selection | count(dst_port) by src_ip > 10
+  - selection | count(dst_ip) by src_ip > 10
+  selection:
+    action: denied
+  timeframe: 24h
+fields:
+- src_ip
+- dst_ip
+- dst_port
+falsepositives:
+- Inventarization systems
+- Vulnerability scans
+- Penetration testing activity
+level: medium
+source: sigma

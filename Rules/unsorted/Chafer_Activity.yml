@@ -1,0 +1,66 @@
+type: x-detection-rule
+id: x-detection-rule--37976598-b8da-4e3b-9552-7edd9ace4d4f
+created: '2018-12-03T23:30:44.356Z'
+modified: '2018-12-03T23:30:44.356Z'
+action: global
+title: Chafer Activity
+description: Detects Chafer activity attributed to OilRig as reported in Nyotron
+  report in March 2018
+references:
+- https://nyotron.com/nyotron-discovers-next-generation-oilrig-attacks/
+author: Florian Roth, Markus Neis
+date: 2018/03/23
+detection:
+  condition: 1 of them
+falsepositives:
+- Unknown
+level: critical
+tags:
+- attack.g0049
+type: x-detection-rule
+id: x-detection-rule--60c0c8d9-e540-4a50-8ece-6d8d9e9ee701
+created: '2018-12-03T23:30:44.356Z'
+modified: '2018-12-03T23:30:44.356Z'
+logsource:
+  product: windows
+  service: system
+detection:
+  selection_service:
+    EventID: 7045
+    ServiceName:
+    - SC Scheduled Scan
+    - UpdatMachine
+type: x-detection-rule
+id: x-detection-rule--68151f48-5468-4da7-abfb-2000aae985a9
+created: '2018-12-03T23:30:44.359Z'
+modified: '2018-12-03T23:30:44.359Z'
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection_process1:
+    CommandLine:
+    - '*\Service.exe i'
+    - '*\Service.exe u'
+    - '*\microsoft\Taskbar\autoit3.exe'
+    - C:\wsc.exe*
+    EventID: 1
+  selection_process2:
+    EventID: 1
+    Image: '*\Windows\Temp\DB\*.exe'
+  selection_process3:
+    CommandLine: '*\nslookup.exe -q=TXT*'
+    EventID: 1
+    ParentImage: '*\Autoit*'
+  selection_reg1:
+    EventID: 13
+    EventType: SetValue
+    TargetObject:
+    - '*SOFTWARE\Microsoft\Windows\CurrentVersion\UMe'
+    - '*SOFTWARE\Microsoft\Windows\CurrentVersion\UT'
+  selection_reg2:
+    EventID: 13
+    Details: DWORD (0x00000001)
+    EventType: SetValue
+    TargetObject: '*\Control\SecurityProviders\WDigest\UseLogonCredential'
+source: sigma

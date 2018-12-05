@@ -1,0 +1,19 @@
+type: x-detection-rule
+id: x-detection-rule--ef279a69-48f6-4785-85c6-c7c6f540b721
+created: '2018-12-03T23:30:44.814Z'
+modified: '2018-12-03T23:30:44.814Z'
+title: Suspicious Driver Load from Temp
+description: Detects a driver load from a temporary directory
+author: Florian Roth
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  condition: selection
+  selection:
+    EventID: 6
+    ImageLoaded: '*\Temp\*'
+falsepositives:
+- there is a relevant set of false positives depending on applications in the environment
+level: medium
+source: sigma

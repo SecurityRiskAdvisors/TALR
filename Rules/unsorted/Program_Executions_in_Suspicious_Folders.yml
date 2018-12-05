@@ -1,0 +1,41 @@
+type: x-detection-rule
+id: x-detection-rule--7c990be7-00c5-4869-88ea-9efa70b41d8f
+created: '2018-12-03T23:30:44.329Z'
+modified: '2018-12-03T23:30:44.329Z'
+title: Program Executions in Suspicious Folders
+status: experimental
+description: Detects program executions in suspicious non-program folders related
+  to malware or hacking activity
+references:
+- Internal Research
+author: Florian Roth
+date: 2018/01/23
+logsource:
+  product: linux
+  service: auditd
+detection:
+  condition: selection
+  selection:
+    exe:
+    - /tmp/*
+    - /var/www/*
+    - /home/*/public_html/*
+    - /usr/local/apache2/*
+    - /usr/local/httpd/*
+    - /var/apache/*
+    - /srv/www/*
+    - /home/httpd/html/*
+    - /srv/http/*
+    - /usr/share/nginx/html/*
+    - /var/lib/pgsql/data/*
+    - /usr/local/mysql/data/*
+    - /var/lib/mysql/*
+    - /var/vsftpd/*
+    - /etc/bind/*
+    - /var/named/*
+    type: SYSCALL
+falsepositives:
+- Admin activity (especially in /tmp folders)
+- Crazy web applications
+level: medium
+source: sigma

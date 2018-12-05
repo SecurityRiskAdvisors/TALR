@@ -1,0 +1,40 @@
+type: x-detection-rule
+id: x-detection-rule--e8293391-646b-4bc3-bb44-a6fdbb032b44
+created: '2018-12-03T23:30:44.520Z'
+modified: '2018-12-03T23:30:44.520Z'
+title: Relevant Anti-Virus Event
+description: This detection method points out highly relevant Antivirus events
+author: Florian Roth
+logsource:
+  product: windows
+  service: application
+detection:
+  condition: keywords and not 1 of filters
+  filters:
+  - Keygen
+  - Crack
+  keywords:
+  - HTool
+  - Hacktool
+  - ASP/Backdoor
+  - JSP/Backdoor
+  - PHP/Backdoor
+  - Backdoor.ASP
+  - Backdoor.JSP
+  - Backdoor.PHP
+  - Webshell
+  - Portscan
+  - Mimikatz
+  - WinCred
+  - PlugX
+  - Korplug
+  - Pwdump
+  - Chopper
+  - WmiExec
+  - Xscan
+  - Clearlog
+  - ASPXSpy
+falsepositives:
+- Some software piracy tools (key generators, cracks) are classified as hack tools
+level: high
+source: sigma

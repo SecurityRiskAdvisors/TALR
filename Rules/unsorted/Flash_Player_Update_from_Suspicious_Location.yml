@@ -1,0 +1,24 @@
+type: x-detection-rule
+id: x-detection-rule--7506fec6-d851-4075-9f28-69895e7775a6
+created: '2018-12-03T23:30:44.431Z'
+modified: '2018-12-03T23:30:44.431Z'
+title: Flash Player Update from Suspicious Location
+status: experimental
+description: Detects a flashplayer update from an unofficial location
+references:
+- https://gist.github.com/roycewilliams/a723aaf8a6ac3ba4f817847610935cfb
+author: Florian Roth
+logsource:
+  category: proxy
+detection:
+  condition: selection and not filter
+  filter:
+    cs-uri-stem: '*.adobe.com/*'
+  selection:
+    cs-uri-query:
+    - '*/install_flash_player.exe'
+    - '*/flash_install.php*'
+falsepositives:
+- Unknown flash download locations
+level: high
+source: sigma

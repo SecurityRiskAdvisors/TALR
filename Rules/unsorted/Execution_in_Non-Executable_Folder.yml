@@ -1,0 +1,32 @@
+type: x-detection-rule
+id: x-detection-rule--0b663e0c-af8a-494c-88a2-86f9df5c0a71
+created: '2018-12-03T23:30:44.714Z'
+modified: '2018-12-03T23:30:44.714Z'
+title: Execution in Non-Executable Folder
+status: experimental
+description: Detects a suspicious exection from an uncommon folder
+author: Florian Roth
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  condition: selection
+  selection:
+    EventID: 1
+    Image:
+    - '*\$Recycle.bin'
+    - '*\Users\All Users\*'
+    - '*\Users\Default\*'
+    - '*\Users\Public\*'
+    - C:\Perflogs\*
+    - '*\config\systemprofile\*'
+    - '*\Windows\Fonts\*'
+    - '*\Windows\IME\*'
+    - '*\Windows\addins\*'
+fields:
+- CommandLine
+- ParentCommandLine
+falsepositives:
+- Unknown
+level: high
+source: sigma

@@ -1,0 +1,72 @@
+type: x-detection-rule
+id: x-detection-rule--87d79d23-5f29-4974-b7e2-76de7722f653
+created: '2018-12-03T23:30:44.401Z'
+modified: '2018-12-03T23:30:44.401Z'
+title: Hack Tool User Agent
+status: experimental
+description: Detects suspicious user agent strings user by hack tools in proxy logs
+references:
+- https://github.com/fastly/waf_testbed/blob/master/templates/default/scanners-user-agents.data.erb
+- http://rules.emergingthreats.net/open/snort-2.9.0/rules/emerging-user_agents.rules
+author: Florian Roth
+logsource:
+  category: proxy
+detection:
+  condition: selection
+  selection:
+    UserAgent:
+    - '*(hydra)*'
+    - '* arachni/*'
+    - '* BFAC *'
+    - '* brutus *'
+    - '* cgichk *'
+    - '*core-project/1.0*'
+    - '* crimscanner/*'
+    - '*datacha0s*'
+    - '*dirbuster*'
+    - '*domino hunter*'
+    - '*dotdotpwn*'
+    - FHScan Core
+    - '*floodgate*'
+    - '*get-minimal*'
+    - '*gootkit auto-rooter scanner*'
+    - '*grendel-scan*'
+    - '* inspath *'
+    - '*internet ninja*'
+    - '*jaascois*'
+    - '* zmeu *'
+    - '*masscan*'
+    - '* metis *'
+    - '*morfeus fucking scanner*'
+    - '*n-stealth*'
+    - '*nsauditor*'
+    - '*pmafind*'
+    - '*security scan*'
+    - '*springenwerk*'
+    - '*teh forest lobster*'
+    - '*toata dragostea*'
+    - '* vega/*'
+    - '*voideye*'
+    - '*webshag*'
+    - '*webvulnscan*'
+    - '* whcc/*'
+    - '* Havij'
+    - '*absinthe*'
+    - '*bsqlbf*'
+    - '*mysqloit*'
+    - '*pangolin*'
+    - '*sql power injector*'
+    - '*sqlmap*'
+    - '*sqlninja*'
+    - '*uil2pn*'
+    - ruler
+    - Mozilla/5.0 (Windows; U; Windows NT 5.1; pt-PT; rv:1.9.1.2) Gecko/20090729
+      Firefox/3.5.2 (.NET CLR 3.5.30729)
+fields:
+- ClientIP
+- URL
+- UserAgent
+falsepositives:
+- Unknown
+level: high
+source: sigma

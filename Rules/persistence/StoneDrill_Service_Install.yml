@@ -1,0 +1,27 @@
+type: x-detection-rule
+id: x-detection-rule--3267a282-8e27-4c9b-949e-2a33dbc6d9a4
+created: '2018-12-03T23:30:44.352Z'
+modified: '2018-12-03T23:30:44.352Z'
+title: StoneDrill Service Install
+description: This method detects a service install of the malicious Microsoft Network
+  Realtime Inspection Service service described in StoneDrill report by Kaspersky
+references:
+- https://securelist.com/blog/research/77725/from-shamoon-to-stonedrill/
+author: Florian Roth
+logsource:
+  product: windows
+  service: system
+detection:
+  condition: selection
+  selection:
+    EventID: 7045
+    ServiceFileName: '* LocalService'
+    ServiceName: NtsSrv
+falsepositives:
+- Unlikely
+level: high
+tags:
+- attack.persistence
+- attack.g0064
+- attack.t1050
+source: sigma

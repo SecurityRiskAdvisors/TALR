@@ -1,0 +1,49 @@
+type: x-detection-rule
+id: x-detection-rule--76e59961-1d26-4b20-82b2-17dd3d51d9e5
+created: '2018-12-03T23:30:44.468Z'
+modified: '2018-12-03T23:30:44.468Z'
+title: NotPetya Ransomware Activity
+status: experimental
+description: Detects NotPetya ransomware activity in which the extracted passwords
+  are passed back to the main module via named pipe, the file system journal of
+  drive C is deleted and windows eventlogs are cleared using wevtutil
+references:
+- https://securelist.com/schroedingers-petya/78870/
+- https://www.hybrid-analysis.com/sample/64b0b58a2c030c77fdb2b537b2fcc4af432bc55ffb36599a31d418c7c69e94b1?environmentId=100
+author: Florian Roth, Tom Ueltschi
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  condition: 1 of them
+  event_clean:
+    CommandLine: '* cl *'
+    EventID: 1
+    Image: '*\wevtutil.exe'
+  fsutil_clean_journal:
+    CommandLine: '* deletejournal *'
+    EventID: 1
+    Image: '*\fsutil.exe'
+  perfc_keyword:
+  - '*\perfc.dat*'
+  pipe_com:
+    CommandLine: '*\AppData\Local\Temp\* \\.\pipe\*'
+    EventID: 1
+  rundll32_dash1:
+    CommandLine: '*.dat,#1'
+    EventID: 1
+    Image: '*\rundll32.exe'
+fields:
+- CommandLine
+- ParentCommandLine
+falsepositives:
+- Admin activity
+level: critical
+tags:
+- attack.execution
+- attack.credential_access
+- attack.defense_evasion
+- attack.t1085
+- attack.t1070
+- attack.t1003
+source: sigma

@@ -1,0 +1,26 @@
+type: x-detection-rule
+id: x-detection-rule--098b8202-e89c-45cc-97ca-6d606339ffa0
+created: '2018-12-03T23:30:44.889Z'
+modified: '2018-12-03T23:30:44.889Z'
+title: Detection of SafetyKatz
+status: experimental
+description: Detects possible SafetyKatz Behaviour
+references:
+- https://github.com/GhostPack/SafetyKatz
+author: Markus Neis
+date: 2018/24/07
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  condition: selection
+  selection:
+    EventID: 11
+    TargetFilename: '*\Temp\debug.bin'
+falsepositives:
+- Unknown
+level: high
+tags:
+- attack.credential_access
+- attack.T1003
+source: sigma

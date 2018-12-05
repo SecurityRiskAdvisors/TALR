@@ -1,0 +1,44 @@
+type: x-detection-rule
+id: x-detection-rule--66f23392-206e-4e4a-a3c3-e53d49ee61f7
+created: '2018-12-03T23:30:44.904Z'
+modified: '2018-12-03T23:30:44.904Z'
+title: Malicious Named Pipe
+status: experimental
+description: Detects the creation of a named pipe used by known APT malware
+references:
+- Various sources
+author: Florian Roth
+date: 2017/11/06
+logsource:
+  product: windows
+  description: Note that you have to configure logging for PipeEvents in Symson
+    config
+  service: sysmon
+detection:
+  condition: selection
+  selection:
+    EventID:
+    - 17
+    - 18
+    PipeName:
+    - \isapi_http
+    - \isapi_dg
+    - \isapi_dg2
+    - \sdlrpc
+    - \ahexec
+    - \winsession
+    - \lsassw
+    - \46a676ab7f179e511e30dd2dc41bd388
+    - \9f81f59bc58452127884ce513865ed20
+    - \e710f28d59aa529d6792ca6ff0ca1b34
+    - \rpchlp_3
+    - \NamePipe_MoreWindows
+    - \pcheap_reuse
+falsepositives:
+- Unkown
+level: critical
+tags:
+- attack.defense_evasion
+- attack.privelege_escalation
+- attack.t1055
+source: sigma

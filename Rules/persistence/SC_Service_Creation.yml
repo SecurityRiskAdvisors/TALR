@@ -1,0 +1,29 @@
+type: x-detection-rule
+id: x-detection-rule--b1590825-51ef-462c-916a-22c64429a762
+created: '2018-12-04T15:23:00.451Z'
+modified: '2018-12-04T15:23:00.451Z'
+title: SC Service Creation
+revision: '1'
+revNotes:
+- Initial commit
+status: experimental
+description: This rule is designed to alert on SC service creation via powershell
+author: Brandon Martin and Nick Ascoli
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  condition: selection
+  selection:
+    CommandLine:
+    - sc create
+    EventID: 1
+    Image:
+    - '*\powershell.exe'
+falsepositives:
+- unknown
+level: medium
+tags:
+- attack.persistence
+enrichment: None
+source: TALR

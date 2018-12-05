@@ -1,0 +1,48 @@
+type: x-detection-rule
+id: x-detection-rule--d73df325-f9c0-4254-8af3-6ca35cd470c7
+created: '2018-12-03T23:30:44.867Z'
+modified: '2018-12-03T23:30:44.867Z'
+title: Regsvr32 Anomaly
+status: experimental
+description: Detects various anomalies in relation to regsvr32.exe
+references:
+- https://subt0x10.blogspot.de/2017/04/bypass-application-whitelisting-script.html
+author: Florian Roth
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  condition: 1 of them
+  selection1:
+    CommandLine: '*\Temp\*'
+    EventID: 1
+    Image: '*\regsvr32.exe'
+  selection2:
+    EventID: 1
+    Image: '*\regsvr32.exe'
+    ParentImage: '*\powershell.exe'
+  selection3:
+    CommandLine:
+    - '*/i:http* scrobj.dll'
+    - '*/i:ftp* scrobj.dll'
+    EventID: 1
+    Image: '*\regsvr32.exe'
+  selection4:
+    EventID: 1
+    Image: '*\wscript.exe'
+    ParentImage: '*\regsvr32.exe'
+  selection5:
+    CommandLine: '*..\..\..\Windows\System32\regsvr32.exe *'
+    EventID: 1
+    Image: '*\EXCEL.EXE'
+fields:
+- CommandLine
+- ParentCommandLine
+falsepositives:
+- Unknown
+level: high
+tags:
+- attack.t1117
+- attack.defense_evasion
+- attack.execution
+source: sigma

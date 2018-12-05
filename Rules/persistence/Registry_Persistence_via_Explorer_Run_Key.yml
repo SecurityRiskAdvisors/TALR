@@ -1,0 +1,39 @@
+type: x-detection-rule
+id: x-detection-rule--f0beca5d-19bf-475b-a97c-45bacf4b7d72
+created: '2018-12-03T23:30:44.812Z'
+modified: '2018-12-03T23:30:44.812Z'
+title: Registry Persistence via Explorer Run Key
+status: experimental
+description: Detects a possible persistence mechanism using RUN key for Windows
+  Explorer and poiting to a suspicious folder
+reference:
+- https://researchcenter.paloaltonetworks.com/2018/07/unit42-upatre-continues-evolve-new-anti-analysis-techniques/
+author: Florian Roth
+date: 2018/07/18
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  condition: selection
+  selection:
+    EventID: 13
+    Details:
+    - C:\Windows\Temp\*
+    - C:\ProgramData\*
+    - '*\AppData\*'
+    - C:\$Recycle.bin\*
+    - C:\Temp\*
+    - C:\Users\Public\*
+    - C:\Users\Default\*
+    TargetObject: '*\Microsoft\Windows\CurrentVersion\Policies\Explorer\Run'
+fields:
+- Image
+- ParentImage
+falsepositives:
+- Unknown
+level: high
+tags:
+- attack.persistence
+- attack.t1060
+- capec.270
+source: sigma

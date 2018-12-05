@@ -1,0 +1,30 @@
+type: x-detection-rule
+id: x-detection-rule--72c798f1-cf5d-46c2-9ac1-077751ead784
+created: '2018-12-03T23:30:44.652Z'
+modified: '2018-12-03T23:30:44.652Z'
+title: Hacktool Use
+description: This method detects well-known keywords, certain field combination
+  that appear in Windows Eventlog when certain hack tools are used
+author: Florian Roth
+logsource:
+  product: windows
+  service: security
+detection:
+  condition: selection1
+  selection1:
+    EventID:
+    - 4776
+    - 4624
+    - 4625
+    WorkstationName: RULER
+falsepositives:
+- Unlikely
+level: critical
+tags:
+- attack.discovery
+- attack.execution
+- attack.t1087
+- attack.t1075
+- attack.t1114
+- attack.t1059
+source: sigma

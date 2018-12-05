@@ -1,0 +1,38 @@
+type: x-detection-rule
+id: x-detection-rule--3f9b76e2-c9f3-4fb9-b890-c45df4e5f863
+created: '2018-12-03T23:30:44.764Z'
+modified: '2018-12-03T23:30:44.764Z'
+title: Webshell Detection With Command Line Keywords
+description: Detects certain command line parameters often used during reconnaissance
+  activity via web shells
+author: Florian Roth
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  condition: selection
+  selection:
+    CommandLine:
+    - whoami
+    - net user
+    - ping -n
+    - systeminfo
+    EventID: 1
+    ParentImage:
+    - '*\apache*'
+    - '*\tomcat*'
+    - '*\w3wp.exe'
+    - '*\php-cgi.exe'
+    - '*\nginx.exe'
+    - '*\httpd.exe'
+fields:
+- CommandLine
+- ParentCommandLine
+falsepositives:
+- unknown
+level: high
+tags:
+- attack.privilege_escalation
+- attack.persistence
+- attack.t1100
+source: sigma

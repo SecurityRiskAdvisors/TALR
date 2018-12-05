@@ -1,0 +1,47 @@
+type: x-detection-rule
+id: x-detection-rule--5be7697e-94a1-4c42-bbd4-154b0146c113
+created: '2018-12-03T23:30:44.313Z'
+modified: '2018-12-03T23:30:44.313Z'
+title: Suspicious Activity in Shell Commands
+description: Detects suspicious shell commands used in various exploit codes (see
+  references)
+references:
+- http://www.threatgeek.com/2017/03/widespread-exploitation-attempts-using-cve-2017-5638.html
+- https://github.com/rapid7/metasploit-framework/blob/master/modules/exploits/multi/http/struts_code_exec_exception_delegator.rb#L121
+- http://pastebin.com/FtygZ1cg
+- https://artkond.com/2017/03/23/pivoting-guide/
+author: Florian Roth
+logsource:
+  product: linux
+detection:
+  condition: keywords
+  keywords:
+  - wget * - http* | perl
+  - wget * - http* | sh
+  - wget * - http* | bash
+  - python -m SimpleHTTPServer
+  - import pty; pty.spawn
+  - '*wget *; chmod +x*'
+  - '*wget *; chmod 777 *'
+  - '*cd /tmp || cd /var/run || cd /mnt*'
+  - stop;service iptables stop;
+  - stop;SuSEfirewall2 stop;
+  - chmod 777 2020
+  - '">>/etc/rc.local;'
+  - wget -c *;chmod 777
+  - base64 -d /tmp/
+  - ' | base64 -d'
+  - /bin/chmod u+s
+  - chmod +s /tmp/
+  - chmod u+s /tmp/
+  - /tmp/haxhax
+  - /tmp/ns_sploit
+  - 'nc -l -p '
+  - 'cp /bin/ksh '
+  - 'cp /bin/sh '
+  - ' /tmp/*.b64 '
+  - /tmp/ysocereal.jar
+falsepositives:
+- Unknown
+level: high
+source: sigma

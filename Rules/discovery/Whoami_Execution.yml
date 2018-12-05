@@ -1,0 +1,48 @@
+type: x-detection-rule
+id: x-detection-rule--ebd06c57-db0c-4fe2-a9a0-5aa4ffd3c179
+created: '2018-12-03T23:30:44.563Z'
+modified: '2018-12-03T23:30:44.563Z'
+action: global
+title: Whoami Execution
+status: experimental
+description: Detects the execution of whoami, which is often used by attackers after
+  exloitation / privilege escalation but rarely used by administrators
+references:
+- https://twitter.com/haroonmeer/status/939099379834658817
+- https://twitter.com/c_APT_ure/status/939475433711722497
+author: Florian Roth
+date: 2018/05/22
+detection:
+  condition: selection
+falsepositives:
+- Admin activity
+- Scripts and administrative tools used in the monitored environment
+level: high
+tags:
+- attack.discovery
+- attack.t1033
+type: x-detection-rule
+id: x-detection-rule--f4b0bdcd-fa21-4d7d-852d-76c15e1891b7
+created: '2018-12-03T23:30:44.564Z'
+modified: '2018-12-03T23:30:44.564Z'
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection:
+    CommandLine: whoami
+    EventID: 1
+type: x-detection-rule
+id: x-detection-rule--49552c8e-dc2a-41c7-b7a4-37b7055ad101
+created: '2018-12-03T23:30:44.565Z'
+modified: '2018-12-03T23:30:44.565Z'
+logsource:
+  product: windows
+  description: 'Requirements: Audit Policy : Detailed Tracking > Audit Process creation,
+    Group Policy : Administrative Templates\System\Audit Process Creation'
+  service: security
+detection:
+  selection:
+    EventID: 4688
+    NewProcessName: '*\whoami.exe'
+source: sigma

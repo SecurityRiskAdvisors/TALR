@@ -1,0 +1,54 @@
+type: x-detection-rule
+id: x-detection-rule--7a7cc053-7658-4c42-97fa-b88d683130e7
+created: '2018-12-03T23:30:44.516Z'
+modified: '2018-12-03T23:30:44.516Z'
+action: global
+title: Possible Applocker Bypass
+status: experimental
+description: Detects execution of executables that can be used to bypass Applocker
+  whitelisting
+references:
+- https://github.com/subTee/ApplicationWhitelistBypassTechniques/blob/master/TheList.txt
+- https://room362.com/post/2014/2014-01-16-application-whitelist-bypass-using-ieexec-dot-exe/
+author: juju4
+detection:
+  condition: selection
+  selection:
+    CommandLine:
+    - '*\msdt.exe*'
+    - '*\installutil.exe*'
+    - '*\regsvcs.exe*'
+    - '*\regasm.exe*'
+    - '*\regsvr32.exe*'
+    - '*\msbuild.exe*'
+    - '*\ieexec.exe*'
+    - '*\mshta.exe*'
+falsepositives:
+- False positives depend on scripts and administrative tools used in the monitored
+  environment
+level: low
+tags:
+- attack.defense_evasion
+type: x-detection-rule
+id: x-detection-rule--364b9acb-ec48-484a-9805-b7506d62b362
+created: '2018-12-03T23:30:44.517Z'
+modified: '2018-12-03T23:30:44.517Z'
+logsource:
+  product: windows
+  description: 'Requirements: Audit Policy : Detailed Tracking > Audit Process creation,
+    Group Policy : Administrative Templates\System\Audit Process Creation'
+  service: security
+detection:
+  selection:
+    EventID: 4688
+type: x-detection-rule
+id: x-detection-rule--cb6e9826-3531-4946-a081-0373bc807d90
+created: '2018-12-03T23:30:44.518Z'
+modified: '2018-12-03T23:30:44.518Z'
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection:
+    EventID: 1
+source: sigma

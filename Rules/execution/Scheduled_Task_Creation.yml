@@ -1,0 +1,33 @@
+type: x-detection-rule
+id: x-detection-rule--179189af-c2b8-4cc9-b5c0-20b7e7467924
+created: '2018-12-03T23:30:44.737Z'
+modified: '2018-12-03T23:30:44.737Z'
+title: Scheduled Task Creation
+status: experimental
+description: Detects the creation of scheduled tasks in user session
+author: Florian Roth
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  condition: selection and not filter
+  filter:
+    User: NT AUTHORITY\SYSTEM
+  selection:
+    CommandLine: '* /create *'
+    EventID: 1
+    Image: '*\schtasks.exe'
+fields:
+- CommandLine
+- ParentCommandLine
+falsepositives:
+- Administrative activity
+- Software installation
+level: low
+tags:
+- attack.execution
+- attack.persistence
+- attack.privelege_escalation
+- attack.t1053
+- attack.s0111
+source: sigma

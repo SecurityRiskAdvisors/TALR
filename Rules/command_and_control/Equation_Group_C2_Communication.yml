@@ -1,0 +1,30 @@
+type: x-detection-rule
+id: x-detection-rule--c938643c-86b6-4778-93ce-59300f0ca65d
+created: '2018-12-03T23:30:44.350Z'
+modified: '2018-12-03T23:30:44.350Z'
+title: Equation Group C2 Communication
+description: Detects communication to C2 servers mentioned in the operational notes
+  of the ShadowBroker leak of EquationGroup C2 tools
+references:
+- https://steemit.com/shadowbrokers/@theshadowbrokers/lost-in-translation
+- https://medium.com/@msuiche/the-nsa-compromised-swift-network-50ec3000b195
+author: Florian Roth
+logsource:
+  category: firewall
+detection:
+  condition: 1 of them
+  incoming:
+    src_ip:
+    - 69.42.98.86
+    - 89.185.234.145
+  outgoing:
+    dst_ip:
+    - 69.42.98.86
+    - 89.185.234.145
+falsepositives:
+- Unknown
+level: high
+tags:
+- attack.command_and_control
+- attack.g0020
+source: sigma

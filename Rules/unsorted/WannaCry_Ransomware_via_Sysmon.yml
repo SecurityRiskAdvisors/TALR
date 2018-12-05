@@ -1,0 +1,44 @@
+type: x-detection-rule
+id: x-detection-rule--02625d96-e25b-4bce-97ba-b18a06346b58
+created: '2018-12-03T23:30:44.478Z'
+modified: '2018-12-03T23:30:44.478Z'
+title: WannaCry Ransomware via Sysmon
+status: experimental
+description: Detects WannaCry ransomware activity via Sysmon
+references:
+- https://www.hybrid-analysis.com/sample/ed01ebfbc9eb5bbea545af4d01bf5f1071661840480439c6e5babe8e080e41aa?environmentId=100
+author: Florian Roth (rule), Tom U. @c_APT_ure (collection)
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  condition: 1 of them
+  selection1:
+    EventID: 1
+    Image:
+    - '*\tasksche.exe'
+    - '*\mssecsvc.exe'
+    - '*\taskdl.exe'
+    - '*\@WanaDecryptor@*'
+    - '*\taskhsvc.exe'
+    - '*\taskse.exe'
+    - '*\111.exe'
+    - '*\lhdfrgui.exe'
+    - '*\diskpart.exe'
+    - '*\linuxnew.exe'
+    - '*\wannacry.exe'
+  selection2:
+    CommandLine:
+    - '*vssadmin delete shadows*'
+    - '*icacls * /grant Everyone:F /T /C /Q*'
+    - '*bcdedit /set {default} recoveryenabled no*'
+    - '*wbadmin delete catalog -quiet*'
+    - '*@Please_Read_Me@.txt*'
+    EventID: 1
+fields:
+- CommandLine
+- ParentCommandLine
+falsepositives:
+- Diskpart.exe usage to manage partitions on the local hard drive
+level: critical
+source: sigma

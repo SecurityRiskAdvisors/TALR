@@ -1,0 +1,43 @@
+type: x-detection-rule
+id: x-detection-rule--ef30838a-e180-4807-ab81-87132682b9d2
+created: '2018-12-03T23:30:44.804Z'
+modified: '2018-12-03T23:30:44.804Z'
+action: global
+title: Suspicious RDP Redirect Using TSCON
+status: experimental
+description: Detects a suspicious RDP session redirect using tscon.exe
+reference:
+- http://www.korznikov.com/2017/03/0-day-or-feature-privilege-escalation.html
+- https://medium.com/@networksecurity/rdp-hijacking-how-to-hijack-rds-and-remoteapp-sessions-transparently-to-move-through-an-da2a1e73a5f6
+author: Florian Roth
+date: 2018/03/17
+detection:
+  condition: selection
+  selection:
+    CommandLine: '* /dest:rdp-tcp:*'
+falsepositives:
+- Unknown
+level: high
+type: x-detection-rule
+id: x-detection-rule--e72ac89b-df5b-4308-a660-f2a1553c9f81
+created: '2018-12-03T23:30:44.805Z'
+modified: '2018-12-03T23:30:44.805Z'
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection:
+    EventID: 1
+type: x-detection-rule
+id: x-detection-rule--476b6b4c-7acc-4985-a0bf-7c4d4f5c407c
+created: '2018-12-03T23:30:44.806Z'
+modified: '2018-12-03T23:30:44.806Z'
+logsource:
+  product: windows
+  description: 'Requirements: Audit Policy : Detailed Tracking > Audit Process creation,
+    Group Policy : Administrative Templates\System\Audit Process Creation'
+  service: security
+detection:
+  selection:
+    EventID: 4688
+source: sigma

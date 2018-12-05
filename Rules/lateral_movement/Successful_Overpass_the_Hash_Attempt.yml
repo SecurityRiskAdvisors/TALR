@@ -1,0 +1,30 @@
+type: x-detection-rule
+id: x-detection-rule--dbe5580b-0f62-4c54-8062-f376cb8ebb9e
+created: '2018-12-03T23:30:44.610Z'
+modified: '2018-12-03T23:30:44.610Z'
+title: Successful Overpass the Hash Attempt
+status: experimental
+description: Detects successful logon with logon type 9 (NewCredentials) which matches
+  the Overpass the Hash behavior of e.g Mimikatz's sekurlsa::pth module.
+references:
+- https://cyberwardog.blogspot.de/2017/04/chronicles-of-threat-hunter-hunting-for.html
+author: Roberto Rodriguez (source), Dominik Schaudel (rule)
+date: 2018/02/12
+logsource:
+  product: windows
+  service: security
+detection:
+  condition: selection
+  selection:
+    AuthenticationPackageName: Negotiate
+    EventID: 4624
+    LogonProcessName: seclogo
+    LogonType: 9
+falsepositives:
+- Runas command-line tool using /netonly parameter
+level: high
+tags:
+- attack.lateral_movement
+- attack.t1075
+- attack.s0002
+source: sigma

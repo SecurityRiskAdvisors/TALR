@@ -1,0 +1,32 @@
+type: x-detection-rule
+id: x-detection-rule--dec99bb0-3a4e-4470-b574-4464a065eccc
+created: '2018-12-03T23:30:44.659Z'
+modified: '2018-12-03T23:30:44.659Z'
+title: Rare Schtasks Creations
+status: experimental
+description: Detects rare scheduled tasks creations that only appear a few times
+  per time frame and could reveal password dumpers, backdoor installs or other types
+  of malicious code
+author: Florian Roth
+logsource:
+  product: windows
+  description: The Advanced Audit Policy setting Object Access > Audit Other Object
+    Access Events has to be configured to allow this detection (not in the baseline
+    recommendations by Microsoft). We also recommend extracting the Command field
+    from the embedded XML in the event data.
+  service: security
+detection:
+  condition: selection | count(TaskName) < 5
+  selection:
+    EventID: 4698
+  timeframe: 7d
+falsepositives:
+- Software installation
+- Software updates
+level: low
+tags:
+- attack.execution
+- attack.privilege_escalation
+- attack.persistence
+- attack.t1053
+source: sigma

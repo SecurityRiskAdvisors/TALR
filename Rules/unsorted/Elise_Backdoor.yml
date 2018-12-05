@@ -1,0 +1,31 @@
+type: x-detection-rule
+id: x-detection-rule--28bb029d-afae-4275-b3d8-c479dc7c4ccc
+created: '2018-12-03T23:30:44.388Z'
+modified: '2018-12-03T23:30:44.388Z'
+title: Elise Backdoor
+status: experimental
+description: Detects Elise backdoor acitivty as used by APT32
+references:
+- https://community.rsa.com/community/products/netwitness/blog/2018/01/30/apt32-continues-asean-targeting
+author: Florian Roth
+date: 2018/01/31
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  condition: 1 of them
+  selection1:
+    CommandLine: '*\Windows\Caches\NavShExt.dll *'
+    EventID: 1
+    Image: C:\Windows\SysWOW64\cmd.exe
+  selection2:
+    CommandLine: '*\AppData\Roaming\MICROS~1\Windows\Caches\NavShExt.dll,Setting'
+    EventID: 1
+falsepositives:
+- Unknown
+level: critical
+tags:
+- attack.g0030
+- attack.g0050
+- attack.s0081
+source: sigma

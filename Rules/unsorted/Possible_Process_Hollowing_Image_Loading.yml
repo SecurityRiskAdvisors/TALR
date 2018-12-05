@@ -1,0 +1,28 @@
+type: x-detection-rule
+id: x-detection-rule--54370bbc-1d74-4543-a7ec-6345879b2846
+created: '2018-12-03T23:30:44.790Z'
+modified: '2018-12-03T23:30:44.790Z'
+title: Possible Process Hollowing Image Loading
+status: experimental
+description: Detects Loading of samlib.dll, WinSCard.dll from untypical process
+  e.g. through process hollowing by Mimikatz
+references:
+- https://cyberwardog.blogspot.com/2017/03/chronicles-of-threat-hunter-hunting-for.html
+author: Markus Neis
+date: 2018/01/07
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  condition: selection
+  selection:
+    EventID: 7
+    Image:
+    - '*\notepad.exe'
+    ImageLoaded:
+    - '*\samlib.dll'
+    - '*\WinSCard.dll'
+falsepositives:
+- Very likely, needs more tuning
+level: high
+source: sigma

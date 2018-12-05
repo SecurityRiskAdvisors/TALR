@@ -1,0 +1,49 @@
+type: x-detection-rule
+id: x-detection-rule--01081c75-e636-4357-9d41-0d88b590350f
+created: '2018-12-03T23:30:44.527Z'
+modified: '2018-12-03T23:30:44.527Z'
+action: global
+title: Suspicious Process Start Locations
+status: experimental
+description: Detects suspicious process run from unusual locations
+references:
+- https://car.mitre.org/wiki/CAR-2013-05-002
+author: juju4
+detection:
+  condition: selection
+  selection:
+    CommandLine:
+    - '*:\RECYCLER\*'
+    - '*:\SystemVolumeInformation\*'
+    - '%windir%\Tasks\*'
+    - '%systemroot%\debug\*'
+falsepositives:
+- False positives depend on scripts and administrative tools used in the monitored
+  environment
+level: medium
+tags:
+- attack.defense_evasion
+- attack.t1036
+type: x-detection-rule
+id: x-detection-rule--53d8b187-7775-4071-a501-65de3ce879d4
+created: '2018-12-03T23:30:44.528Z'
+modified: '2018-12-03T23:30:44.528Z'
+logsource:
+  product: windows
+  description: 'Requirements: Audit Policy : Detailed Tracking > Audit Process creation,
+    Group Policy : Administrative Templates\System\Audit Process Creation'
+  service: security
+detection:
+  selection:
+    EventID: 4688
+type: x-detection-rule
+id: x-detection-rule--24bacb1d-459e-4a76-8e7a-0fe88d22c939
+created: '2018-12-03T23:30:44.529Z'
+modified: '2018-12-03T23:30:44.529Z'
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection:
+    EventID: 1
+source: sigma

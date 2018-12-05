@@ -1,0 +1,37 @@
+type: x-detection-rule
+id: x-detection-rule--ab4974ed-db21-4662-898b-abafea4e9914
+created: '2018-12-03T23:30:44.845Z'
+modified: '2018-12-03T23:30:44.845Z'
+title: Hiding files with attrib.exe
+status: experimental
+description: Detects usage of attrib.exe to hide files from users.
+author: Sami Ruohonen
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  condition: selection and not (ini or intel)
+  ini:
+    CommandLine: '*\desktop.ini *'
+  intel:
+    CommandLine: +R +H +S +A \*.cui
+    ParentCommandLine: C:\WINDOWS\system32\\*.bat
+    ParentImage: '*\cmd.exe'
+  selection:
+    CommandLine: '* +h *'
+    EventID: 1
+    Image: '*\attrib.exe'
+fields:
+- CommandLine
+- ParentCommandLine
+- User
+falsepositives:
+- igfxCUIService.exe hiding *.cui files via .bat script (attrib.exe a child of cmd.exe
+  and igfxCUIService.exe is the parent of the cmd.exe)
+- msiexec.exe hiding desktop.ini
+level: low
+tags:
+- attack.defense_evasion
+- attack.persistence
+- attack.t1158
+source: sigma

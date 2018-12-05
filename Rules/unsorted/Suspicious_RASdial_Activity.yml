@@ -1,0 +1,43 @@
+type: x-detection-rule
+id: x-detection-rule--2e76ed83-6312-47b7-abb8-0382b6ba7585
+created: '2018-12-03T23:30:44.540Z'
+modified: '2018-12-03T23:30:44.540Z'
+action: global
+title: Suspicious RASdial Activity
+status: experimental
+description: Detects suspicious process related to rasdial.exe
+references:
+- https://twitter.com/subTee/status/891298217907830785
+author: juju4
+detection:
+  condition: selection
+  selection:
+    CommandLine:
+    - rasdial
+falsepositives:
+- False positives depend on scripts and administrative tools used in the monitored
+  environment
+level: medium
+type: x-detection-rule
+id: x-detection-rule--f9c3b5ac-481c-4b72-bc85-69cef43ce902
+created: '2018-12-03T23:30:44.541Z'
+modified: '2018-12-03T23:30:44.541Z'
+logsource:
+  product: windows
+  description: 'Requirements: Audit Policy : Detailed Tracking > Audit Process creation,
+    Group Policy : Administrative Templates\System\Audit Process Creation'
+  service: security
+detection:
+  selection:
+    EventID: 4688
+type: x-detection-rule
+id: x-detection-rule--848a65cc-cebd-4cc8-9ef6-fa63801b5223
+created: '2018-12-03T23:30:44.541Z'
+modified: '2018-12-03T23:30:44.541Z'
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection:
+    EventID: 1
+source: sigma

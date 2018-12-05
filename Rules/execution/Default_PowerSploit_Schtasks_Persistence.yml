@@ -1,0 +1,37 @@
+type: x-detection-rule
+id: x-detection-rule--108a7daa-019c-4ec6-9ba6-a5e884c3ccf8
+created: '2018-12-03T23:30:44.923Z'
+modified: '2018-12-03T23:30:44.923Z'
+title: Default PowerSploit Schtasks Persistence
+status: experimental
+description: Detects the creation of a schtask via PowerSploit Default Configuration
+references:
+- https://github.com/0xdeadbeefJERKY/PowerSploit/blob/8690399ef70d2cad10213575ac67e8fa90ddf7c3/Persistence/Persistence.psm1
+author: Markus Neis
+date: 2018/03/06
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  condition: selection
+  selection:
+    CommandLine:
+    - '*\schtasks.exe*/Create*/RU*system*/SC*ONLOGON*'
+    - '*\schtasks.exe*/Create*/RU*system*/SC*DAILY*'
+    - '*\schtasks.exe*/Create*/RU*system*/SC*ONIDLE*'
+    - '*\schtasks.exe*/Create*/RU*system*/SC*HOURLY*'
+    ParentImage:
+    - '*\Powershell.exe'
+falsepositives:
+- False positives are possible, depends on organisation and processes
+level: high
+tags:
+- attack.execution
+- attack.persistence
+- attack.privelege_escalation
+- attack.t1053
+- attack.t1086
+- attack.s0111
+- attack.g0022
+- attack.g0060
+source: sigma

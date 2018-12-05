@@ -1,0 +1,26 @@
+type: x-detection-rule
+id: x-detection-rule--3a2b4cd1-fd23-4b71-8d77-504097234b99
+created: '2018-12-03T23:30:44.726Z'
+modified: '2018-12-03T23:30:44.726Z'
+title: WMI Persistence - Script Event Consumer File Write
+status: experimental
+description: Detects file writes of WMI script event consumer
+references:
+- https://www.eideon.com/2018-03-02-THL03-WMIBackdoors/
+author: Thomas Patzke
+date: 2018/03/07
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  condition: selection
+  selection:
+    EventID: 11
+    Image: C:\WINDOWS\system32\wbem\scrcons.exe
+falsepositives:
+- Unknown (data set is too small; further testing needed)
+level: high
+tags:
+- attack.t1084
+- attack.persistence
+source: sigma

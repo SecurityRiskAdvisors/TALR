@@ -1,0 +1,30 @@
+type: x-detection-rule
+id: x-detection-rule--6edf01f3-d5dd-4ffb-8c9f-7204267fd785
+created: '2018-12-03T23:30:44.595Z'
+modified: '2018-12-03T23:30:44.595Z'
+title: Admin User Remote Logon
+status: experimental
+description: Detect remote login by Administrator user depending on internal pattern
+references:
+- https://car.mitre.org/wiki/CAR-2016-04-005
+author: juju4
+logsource:
+  product: windows
+  description: 'Requirements: Identifiable administrators usernames (pattern or
+    special unique character. ex: "Admin-*"), internal policy mandating use only
+    as secondary account'
+  service: security
+detection:
+  condition: selection
+  selection:
+    AccountName: Admin-*
+    AuthenticationPackageName: Negotiate
+    EventID: 4624
+    LogonType: 10
+falsepositives:
+- Legitimate administrative activity
+level: low
+tags:
+- attack.lateral_movement
+- attack.t1078
+source: sigma

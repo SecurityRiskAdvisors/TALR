@@ -1,0 +1,22 @@
+type: x-detection-rule
+id: x-detection-rule--a38d93ee-407c-4072-9d6e-79571476a7c5
+created: '2018-12-03T23:30:44.395Z'
+modified: '2018-12-03T23:30:44.395Z'
+title: Suspicious DNS Query with B64 Encoded String
+status: experimental
+description: Detects suspicious DNS queries using base64 encoding
+references:
+- https://github.com/krmaxwell/dns-exfiltration
+author: Florian Roth
+date: 2018/05/10
+logsource:
+  category: dns
+detection:
+  condition: selection
+  selection:
+    query:
+    - '*==.*'
+falsepositives:
+- Unknown
+level: medium
+source: sigma

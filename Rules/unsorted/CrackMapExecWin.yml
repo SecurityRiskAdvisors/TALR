@@ -1,0 +1,45 @@
+type: x-detection-rule
+id: x-detection-rule--d6cc356e-80b9-4bd1-ba1f-6497a9d610ba
+created: '2018-12-03T23:30:44.365Z'
+modified: '2018-12-03T23:30:44.365Z'
+action: global
+title: CrackMapExecWin
+status: experimental
+description: Detects CrackMapExecWin Activity as Described by NCSC
+references:
+- https://www.ncsc.gov.uk/alerts/hostile-state-actors-compromising-uk-organisations-focus-engineering-and-industrial-control
+author: Markus Neis
+detection:
+  condition: 1 of them
+falsepositives:
+- None
+level: critical
+tags:
+- attack.g0035
+type: x-detection-rule
+id: x-detection-rule--bceb4b87-0b7c-48b1-a39d-aaa749953974
+created: '2018-12-03T23:30:44.366Z'
+modified: '2018-12-03T23:30:44.366Z'
+logsource:
+  product: windows
+  description: 'Requirements: Audit Policy : Detailed Tracking > Audit Process creation,
+    Group Policy : Administrative Templates\System\Audit Process Creation'
+  service: security
+detection:
+  selection1:
+    EventID: 4688
+    NewProcessName:
+    - '*\crackmapexec.exe'
+type: x-detection-rule
+id: x-detection-rule--2f513e47-4eac-4d5e-84a9-fc5c78e3d612
+created: '2018-12-03T23:30:44.367Z'
+modified: '2018-12-03T23:30:44.367Z'
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection1:
+    EventID: 1
+    Image:
+    - '*\crackmapexec.exe'
+source: sigma

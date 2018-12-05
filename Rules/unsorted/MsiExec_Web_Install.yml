@@ -1,0 +1,44 @@
+type: x-detection-rule
+id: x-detection-rule--d4846b43-ba07-4f7c-b718-fd3b09e1f463
+created: '2018-12-03T23:30:44.490Z'
+modified: '2018-12-03T23:30:44.490Z'
+action: global
+title: MsiExec Web Install
+status: experimental
+description: Detects suspicious msiexec proess starts with web addreses as parameter
+references:
+- https://blog.trendmicro.com/trendlabs-security-intelligence/attack-using-windows-installer-msiexec-exe-leads-lokibot/
+author: Florian Roth
+date: 2018/02/09
+detection:
+  condition: selection
+  selection:
+    CommandLine:
+    - '* msiexec*:\/\/*'
+falsepositives:
+- False positives depend on scripts and administrative tools used in the monitored
+  environment
+level: medium
+type: x-detection-rule
+id: x-detection-rule--ada244e9-6e69-405b-a594-5c18847078bd
+created: '2018-12-03T23:30:44.491Z'
+modified: '2018-12-03T23:30:44.491Z'
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection:
+    EventID: 1
+type: x-detection-rule
+id: x-detection-rule--7476ccf1-ae38-4ceb-b622-dc7630f90960
+created: '2018-12-03T23:30:44.491Z'
+modified: '2018-12-03T23:30:44.491Z'
+logsource:
+  product: windows
+  description: 'Requirements: Audit Policy : Detailed Tracking > Audit Process creation,
+    Group Policy : Administrative Templates\System\Audit Process Creation'
+  service: security
+detection:
+  selection:
+    EventID: 4688
+source: sigma

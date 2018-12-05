@@ -1,0 +1,24 @@
+type: x-detection-rule
+id: x-detection-rule--4ebd8c01-42dd-4134-b7e6-09370f44dc9e
+created: '2018-12-03T23:30:44.748Z'
+modified: '2018-12-03T23:30:44.748Z'
+title: MSHTA spwaned by SVCHOST as seen in LethalHTA
+status: experimental
+description: Detects MSHTA.EXE spwaned by SVCHOST described in report
+references:
+- https://codewhitesec.blogspot.com/2018/07/lethalhta.html
+author: Markus Neis
+date: 2018/06/07
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  condition: selection
+  selection:
+    EventID: 1
+    Image: '*\mshta.exe'
+    ParentImage: '*\svchost.exe'
+falsepositives:
+- Unknown
+level: high
+source: sigma

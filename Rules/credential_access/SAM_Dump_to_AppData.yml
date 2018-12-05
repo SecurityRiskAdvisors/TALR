@@ -1,0 +1,26 @@
+type: x-detection-rule
+id: x-detection-rule--7ec23451-8d87-49b1-a290-06461575523c
+created: '2018-12-03T23:30:44.597Z'
+modified: '2018-12-03T23:30:44.597Z'
+title: SAM Dump to AppData
+status: experimental
+description: Detects suspicious SAM dump activity as cause by QuarksPwDump and other
+  password dumpers
+author: Florian Roth
+logsource:
+  product: windows
+  description: The source of this type of event is Kernel-General
+  service: system
+detection:
+  condition: all of them
+  keywords:
+  - '*\AppData\Local\Temp\SAM-*.dmp *'
+  selection:
+    EventID: 16
+falsepositives:
+- Penetration testing
+level: high
+tags:
+- attack.credential_access
+- attack.t1003
+source: sigma

@@ -1,0 +1,50 @@
+type: x-detection-rule
+id: x-detection-rule--e270718c-04e9-4283-b3ee-0839f363dc66
+created: '2018-12-03T23:30:44.384Z'
+modified: '2018-12-03T23:30:44.384Z'
+action: global
+title: Defrag Deactivation
+description: Detects the deactivation of the Scheduled defragmentation task as seen
+  by Slingshot APT group
+references:
+- https://securelist.com/apt-slingshot/84312/
+author: Florian Roth
+date: 2018/03/10
+logsource:
+  product: windows
+  description: 'Requirements: Audit Policy : Audit Other Object Access Events >
+    Success'
+  service: security
+detection:
+  condition: selection
+falsepositives:
+- Unknown
+level: medium
+tags:
+- attack.persistence
+type: x-detection-rule
+id: x-detection-rule--8cf66534-1138-4900-8fc6-12527ecb5bb7
+created: '2018-12-03T23:30:44.385Z'
+modified: '2018-12-03T23:30:44.385Z'
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection:
+    CommandLine:
+    - '*schtasks* /delete *Defrag\ScheduledDefrag*'
+    EventID: 1
+type: x-detection-rule
+id: x-detection-rule--43b43894-b01b-478c-9e4a-842dfa0bb8e7
+created: '2018-12-03T23:30:44.386Z'
+modified: '2018-12-03T23:30:44.386Z'
+logsource:
+  product: windows
+  description: 'Requirements: Audit Policy : Audit Other Object Access Events >
+    Success'
+  service: security
+detection:
+  selection:
+    EventID: 4701
+    TaskName: \Microsoft\Windows\Defrag\ScheduledDefrag
+source: sigma

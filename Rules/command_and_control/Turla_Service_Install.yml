@@ -1,0 +1,28 @@
+type: x-detection-rule
+id: x-detection-rule--a299419f-7990-45a5-8ac9-bbf8c0a17a51
+created: '2018-12-03T23:30:44.380Z'
+modified: '2018-12-03T23:30:44.380Z'
+title: Turla Service Install
+description: This method detects a service install of malicious services mentioned
+  in Carbon Paper - Turla report by ESET
+references:
+- https://www.welivesecurity.com/2017/03/30/carbon-paper-peering-turlas-second-stage-backdoor/
+logsource:
+  product: windows
+  service: system
+detection:
+  condition: selection
+  selection:
+    EventID: 7045
+    ServiceName:
+    - srservice
+    - ipvpn
+    - hkmsvc
+falsepositives:
+- Unknown
+level: high
+tags:
+- attack.command_and_control
+- attack.g0010
+- attack.t1050
+source: sigma

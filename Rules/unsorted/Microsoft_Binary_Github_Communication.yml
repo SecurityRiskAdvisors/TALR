@@ -1,0 +1,27 @@
+type: x-detection-rule
+id: x-detection-rule--c9e88676-1695-4376-b7e8-132e439c763d
+created: '2018-12-03T23:30:44.761Z'
+modified: '2018-12-03T23:30:44.761Z'
+title: Microsoft Binary Github Communication
+status: experimental
+description: Detects an executable in the Windows folder accessing github.com
+references:
+- https://twitter.com/M_haggis/status/900741347035889665
+- https://twitter.com/M_haggis/status/1032799638213066752
+author: Michael Haag (idea), Florian Roth (rule)
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  condition: selection
+  selection:
+    EventID: 3
+    DestinationHostname:
+    - '*.github.com'
+    - '*.githubusercontent.com'
+    Image: C:\Windows\*
+falsepositives:
+- Unknown
+- '@subTee in your network'
+level: high
+source: sigma

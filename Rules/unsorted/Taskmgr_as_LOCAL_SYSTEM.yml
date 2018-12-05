@@ -1,0 +1,22 @@
+type: x-detection-rule
+id: x-detection-rule--d856849c-4afd-4dd5-8508-f4fae535b11d
+created: '2018-12-03T23:30:44.869Z'
+modified: '2018-12-03T23:30:44.869Z'
+title: Taskmgr as LOCAL_SYSTEM
+status: experimental
+description: Detects the creation of taskmgr.exe process in context of LOCAL_SYSTEM
+author: Florian Roth
+date: 2018/03/18
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  condition: selection
+  selection:
+    EventID: 1
+    Image: '*\taskmgr.exe'
+    User: NT AUTHORITY\SYSTEM
+falsepositives:
+- Unkown
+level: high
+source: sigma

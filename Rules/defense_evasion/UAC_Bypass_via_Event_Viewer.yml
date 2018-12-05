@@ -1,0 +1,35 @@
+type: x-detection-rule
+id: x-detection-rule--459c483f-9b20-47dd-9c45-d2f61516ba2f
+created: '2018-12-03T23:30:44.771Z'
+modified: '2018-12-03T23:30:44.771Z'
+title: UAC Bypass via Event Viewer
+status: experimental
+description: Detects UAC bypass method using Windows event viewer
+references:
+- https://enigma0x3.net/2016/08/15/fileless-uac-bypass-using-eventvwr-exe-and-registry-hijacking/
+- https://www.hybrid-analysis.com/sample/e122bc8bf291f15cab182a5d2d27b8db1e7019e4e96bb5cdbd1dfe7446f3f51f?environmentId=100
+author: Florian Roth
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  condition: methregistry or ( methprocess and not filterprocess )
+  filterprocess:
+    Image: '*\mmc.exe'
+  methprocess:
+    EventID: 1
+    ParentImage: '*\eventvwr.exe'
+  methregistry:
+    EventID: 13
+    TargetObject: HKEY_USERS\*\mscfile\shell\open\command
+fields:
+- CommandLine
+- ParentCommandLine
+falsepositives:
+- unknown
+level: critical
+tags:
+- attack.defense_evasion
+- attack.privilege_escalation
+- attack.t1088
+source: sigma

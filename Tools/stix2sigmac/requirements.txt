@@ -1,0 +1,3 @@
+sigmatools
+json2yaml
+figlet

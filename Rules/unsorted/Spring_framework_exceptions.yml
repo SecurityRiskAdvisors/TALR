@@ -1,0 +1,28 @@
+type: x-detection-rule
+id: x-detection-rule--07daad85-c525-4404-af21-8f6428a9e443
+created: '2018-12-03T23:30:44.451Z'
+modified: '2018-12-03T23:30:44.451Z'
+title: Spring framework exceptions
+description: Detects suspicious Spring framework exceptions that could indicate
+  exploitation attempts
+references:
+- https://docs.spring.io/spring-security/site/docs/current/apidocs/overview-tree.html
+author: Thomas Patzke
+logsource:
+  category: application
+  product: spring
+detection:
+  condition: keywords
+  keywords:
+  - AccessDeniedException
+  - CsrfException
+  - InvalidCsrfTokenException
+  - MissingCsrfTokenException
+  - CookieTheftException
+  - InvalidCookieException
+  - RequestRejectedException
+falsepositives:
+- Application bugs
+- Penetration testing
+level: medium
+source: sigma

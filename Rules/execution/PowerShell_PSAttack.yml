@@ -1,0 +1,28 @@
+type: x-detection-rule
+id: x-detection-rule--68543904-2eed-49f1-9500-f6704c67d5c2
+created: '2018-12-03T23:30:44.712Z'
+modified: '2018-12-03T23:30:44.712Z'
+title: PowerShell PSAttack
+status: experimental
+description: Detects the use of PSAttack PowerShell hack tool
+references:
+- https://adsecurity.org/?p=2921
+author: Sean Metcalf (source), Florian Roth (rule)
+logsource:
+  product: windows
+  description: It is recommanded to use the new "Script Block Logging" of PowerShell
+    v5 https://adsecurity.org/?p=2277
+  service: powershell
+detection:
+  condition: all of them
+  keyword:
+  - PS ATTACK!!!
+  selection:
+    EventID: 4103
+falsepositives:
+- Pentesters
+level: high
+tags:
+- attack.execution
+- attack.t1086
+source: sigma

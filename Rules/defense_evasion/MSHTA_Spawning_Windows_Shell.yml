@@ -1,0 +1,43 @@
+type: x-detection-rule
+id: x-detection-rule--4201c8fa-fb4b-44e8-8097-66263acbc232
+created: '2018-12-03T23:30:44.796Z'
+modified: '2018-12-03T23:30:44.796Z'
+title: MSHTA Spawning Windows Shell
+status: experimental
+description: Detects a Windows command line executable started from MSHTA.
+references:
+- https://www.trustedsec.com/july-2015/malicious-htas/
+author: Michael Haag
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  condition: selection and not filter
+  filter:
+    CommandLine:
+    - '*/HP/HP*'
+    - '*\HP\HP*'
+  selection:
+    EventID: 1
+    Image:
+    - '*\cmd.exe'
+    - '*\powershell.exe'
+    - '*\wscript.exe'
+    - '*\cscript.exe'
+    - '*\sh.exe'
+    - '*\bash.exe'
+    - '*\reg.exe'
+    - '*\regsvr32.exe'
+    - '*\BITSADMIN*'
+    ParentImage: '*\mshta.exe'
+fields:
+- CommandLine
+- ParentCommandLine
+falsepositives:
+- Printer software / driver installations
+level: high
+tags:
+- attack.defense_evasion
+- attack.execution
+- attack.t1170
+source: sigma

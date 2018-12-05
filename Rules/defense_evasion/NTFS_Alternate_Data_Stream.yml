@@ -1,0 +1,29 @@
+type: x-detection-rule
+id: x-detection-rule--f7c59f88-1fbc-4e9e-88a8-edc3c699ff55
+created: '2018-12-03T23:30:44.683Z'
+modified: '2018-12-03T23:30:44.683Z'
+title: NTFS Alternate Data Stream
+status: experimental
+description: Detects writing data into NTFS alternate data streams from powershell.
+  Needs Script Block Logging.
+references:
+- http://www.powertheshell.com/ntfsstreams/
+author: Sami Ruohonen
+logsource:
+  product: windows
+  description: It is recommended to use the new "Script Block Logging" of PowerShell
+    v5 https://adsecurity.org/?p=2277
+  service: powershell
+detection:
+  condition: keyword1 and keyword2
+  keyword1:
+  - set-content
+  keyword2:
+  - -stream
+falsepositives:
+- unknown
+level: high
+tags:
+- attack.defense_evasion
+- attack.t1096
+source: sigma

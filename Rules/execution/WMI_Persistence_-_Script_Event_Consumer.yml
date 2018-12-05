@@ -1,0 +1,47 @@
+type: x-detection-rule
+id: x-detection-rule--0f039264-f4f0-4117-99e5-b101a81946ea
+created: '2018-12-03T23:30:44.499Z'
+modified: '2018-12-03T23:30:44.499Z'
+action: global
+title: WMI Persistence - Script Event Consumer
+status: experimental
+description: Detects WMI script event consumers
+references:
+- https://www.eideon.com/2018-03-02-THL03-WMIBackdoors/
+author: Thomas Patzke
+date: 2018/03/07
+detection:
+  condition: selection
+  selection:
+    Image: C:\WINDOWS\system32\wbem\scrcons.exe
+    ParentImage: C:\Windows\System32\svchost.exe
+falsepositives:
+- Legitimate event consumers
+level: high
+tags:
+- attack.execution
+- attack.persistence
+- attack.t1047
+type: x-detection-rule
+id: x-detection-rule--54995a03-0869-4a24-8385-73cb36ef60bd
+created: '2018-12-03T23:30:44.500Z'
+modified: '2018-12-03T23:30:44.500Z'
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection:
+    EventID: 1
+type: x-detection-rule
+id: x-detection-rule--b945e40a-2551-4f82-b109-a7b357399c7d
+created: '2018-12-03T23:30:44.501Z'
+modified: '2018-12-03T23:30:44.501Z'
+logsource:
+  product: windows
+  description: 'Requirements: Audit Policy : Detailed Tracking > Audit Process creation,
+    Group Policy : Administrative Templates\System\Audit Process Creation'
+  service: security
+detection:
+  selection:
+    EventID: 4688
+source: sigma

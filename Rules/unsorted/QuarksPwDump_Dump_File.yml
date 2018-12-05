@@ -1,0 +1,23 @@
+type: x-detection-rule
+id: x-detection-rule--7bc95ead-b861-42dc-838e-5e6bfe162a60
+created: '2018-12-03T23:30:44.897Z'
+modified: '2018-12-03T23:30:44.897Z'
+title: QuarksPwDump Dump File
+status: experimental
+description: Detects a dump file written by QuarksPwDump password dumper
+references:
+- https://jpcertcc.github.io/ToolAnalysisResultSheet/details/QuarksPWDump.htm
+author: Florian Roth
+date: 2018/02/10
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  condition: selection
+  selection:
+    EventID: 11
+    TargetFilename: '*\AppData\Local\Temp\SAM-*.dmp*'
+falsepositives:
+- Unknown
+level: critical
+source: sigma

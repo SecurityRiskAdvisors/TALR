@@ -1,0 +1,26 @@
+type: x-detection-rule
+id: x-detection-rule--6af13e1f-a088-4e22-8f7a-97e7c6077e95
+created: '2018-12-03T23:30:44.625Z'
+modified: '2018-12-03T23:30:44.625Z'
+title: Addition of SID History to Active Directory Object
+status: stable
+description: An attacker can use the SID history attribute to gain additional privileges.
+references:
+- https://adsecurity.org/?p=1772
+author: Thomas Patzke
+logsource:
+  product: windows
+  service: security
+detection:
+  condition: selection
+  selection:
+    EventID:
+    - 4765
+    - 4766
+falsepositives:
+- Migration of an account into a new domain
+level: medium
+tags:
+- attack.privilege_escalation
+- attack.t1178
+source: sigma

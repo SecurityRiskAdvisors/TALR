@@ -1,0 +1,18 @@
+type: x-detection-rule
+id: x-detection-rule--62906ba4-ea42-4ff2-be9d-fc6fd53a7886
+created: '2018-12-03T23:30:44.308Z'
+modified: '2018-12-03T23:30:44.308Z'
+title: Shellshock Expression
+description: Detects shellshock expressions in log files
+references:
+- http://rubular.com/r/zxBfjWfFYs
+logsource:
+  product: linux
+detection:
+  condition: expression
+  expression:
+  - /\(\)\s*\t*\{.*;\s*\}\s*;/
+falsepositives:
+- Unknown
+level: high
+source: sigma

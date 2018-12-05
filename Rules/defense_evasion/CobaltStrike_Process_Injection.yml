@@ -1,0 +1,26 @@
+type: x-detection-rule
+id: x-detection-rule--baa13c99-83c4-401a-8d31-c3c13cfdbfa4
+created: '2018-12-03T23:30:44.721Z'
+modified: '2018-12-03T23:30:44.721Z'
+title: CobaltStrike Process Injection
+status: experimental
+description: Detects a possible remote threat creation with certain characteristics
+  which are typical for Cobalt Strike beacons
+references:
+- https://medium.com/@olafhartong/cobalt-strike-remote-threads-detection-206372d11d0f
+author: Olaf Hartong, Florian Roth
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  condition: selection
+  selection:
+    EventID: 8
+    TargetProcessAddress: '*0B80'
+falsepositives:
+- unknown
+level: high
+tags:
+- attack.process_injection
+- attack.t1055
+source: sigma

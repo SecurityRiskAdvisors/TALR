@@ -1,0 +1,27 @@
+type: x-detection-rule
+id: x-detection-rule--728d1c7a-188f-4dce-811f-d8566161705a
+created: '2018-12-03T23:30:44.671Z'
+modified: '2018-12-03T23:30:44.671Z'
+title: Access to ADMIN$ Share
+status: experimental
+description: Detects access to $ADMIN share
+author: Florian Roth
+logsource:
+  product: windows
+  description: The advanced audit policy setting "Object Access > Audit File Share"
+    must be configured for Success/Failure
+  service: security
+detection:
+  condition: selection and not filter
+  filter:
+    SubjectUserName: '*$'
+  selection:
+    EventID: 5140
+    ShareName: Admin$
+falsepositives:
+- Legitimate administrative activity
+level: low
+tags:
+- attack.lateral_movement
+- attack.t1077
+source: sigma

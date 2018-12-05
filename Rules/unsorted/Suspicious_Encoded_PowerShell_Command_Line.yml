@@ -1,0 +1,42 @@
+type: x-detection-rule
+id: x-detection-rule--1abd7428-b19a-4b86-a55d-118f72d50d70
+created: '2018-12-03T23:30:44.689Z'
+modified: '2018-12-03T23:30:44.689Z'
+action: global
+title: Suspicious Encoded PowerShell Command Line
+status: experimental
+description: Detects suspicious powershell process which includes bxor command,
+  alternatvide obfuscation method to b64 encoded commands.
+author: Sami Ruohonen
+date: 2018/09/05
+detection:
+  condition: selection
+  selection:
+    CommandLine:
+    - '* -bxor*'
+falsepositives:
+- unknown
+level: medium
+type: x-detection-rule
+id: x-detection-rule--b2ef2e3a-9bf9-436f-98ff-fdd8e7e3254e
+created: '2018-12-03T23:30:44.689Z'
+modified: '2018-12-03T23:30:44.689Z'
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection:
+    EventID: 1
+type: x-detection-rule
+id: x-detection-rule--012840af-4c96-46f0-bc10-226b2106b282
+created: '2018-12-03T23:30:44.690Z'
+modified: '2018-12-03T23:30:44.690Z'
+logsource:
+  product: windows
+  description: 'Requirements: Audit Policy : Detailed Tracking > Audit Process creation,
+    Group Policy : Administrative Templates\System\Audit Process Creation'
+  service: security
+detection:
+  selection:
+    EventID: 4688
+source: sigma

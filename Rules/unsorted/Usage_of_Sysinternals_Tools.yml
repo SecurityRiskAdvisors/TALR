@@ -1,0 +1,25 @@
+type: x-detection-rule
+id: x-detection-rule--e5e075d3-e50c-4a9a-ad34-e7d90d6e6abd
+created: '2018-12-03T23:30:44.739Z'
+modified: '2018-12-03T23:30:44.739Z'
+title: Usage of Sysinternals Tools
+status: experimental
+description: Detects the usage of Sysinternals Tools due to accepteula key beeing
+  added to Registry
+references:
+- https://twitter.com/Moti_B/status/1008587936735035392
+author: Markus Neis
+date: 2017/08/28
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  condition: selection
+  selection:
+    EventID: 13
+    TargetObject: '*\EulaAccepted'
+falsepositives:
+- Legitimate use of SysInternals tools
+- Programs that use the same Registry Key
+level: low
+source: sigma

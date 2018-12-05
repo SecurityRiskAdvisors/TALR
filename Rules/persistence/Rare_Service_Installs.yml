@@ -1,0 +1,27 @@
+type: x-detection-rule
+id: x-detection-rule--1ccfe55b-40ef-4854-a71b-a9d327f02b34
+created: '2018-12-03T23:30:44.545Z'
+modified: '2018-12-03T23:30:44.545Z'
+title: Rare Service Installs
+status: experimental
+description: Detects rare service installs that only appear a few times per time
+  frame and could reveal password dumpers, backdoor installs or other types of malicious
+  services
+author: Florian Roth
+logsource:
+  product: windows
+  service: system
+detection:
+  condition: selection | count(ServiceFileName) < 5
+  selection:
+    EventID: 7045
+  timeframe: 7d
+falsepositives:
+- Software installation
+- Software updates
+level: low
+tags:
+- attack.persistence
+- attack.privilege_escalation
+- attack.t1050
+source: sigma

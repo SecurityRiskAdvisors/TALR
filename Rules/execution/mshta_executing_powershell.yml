@@ -1,0 +1,30 @@
+type: x-detection-rule
+id: x-detection-rule--c92aae87-20ef-4bf3-8908-29717a5beebd
+created: '2018-12-04T15:23:00.499Z'
+modified: '2018-12-04T15:23:00.499Z'
+title: mshta executing powershell
+revision: '1'
+revNotes:
+- Initial commit
+status: experimental
+description: This rule is designed to alert on the use of mshta executing powershell,
+  for example 'mshta.exe javascript:a=(GetObject("script:C/Payload/Location/Powershell.sct)).Exec();close();"'
+author: Brandon Martin and Nick Ascoli
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  condition: selection
+  selection:
+    EventID: 1
+    ParentImage:
+    - '*\mshta.exe'
+    Image:
+    - '*\powershell.exe'
+falsepositives:
+- unknown
+level: high
+tags:
+- attack.execution
+enrichment: None
+source: TALR

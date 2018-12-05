@@ -1,0 +1,30 @@
+type: x-detection-rule
+id: x-detection-rule--bdddd9a0-244a-440e-b2a3-ff08fe8ae9db
+created: '2018-12-03T23:30:44.833Z'
+modified: '2018-12-03T23:30:44.833Z'
+title: Suspicious Control Panel DLL Load
+status: experimental
+description: Detects suspicious Rundll32 execution from control.exe as used by Equation
+  Group and Exploit Kits
+references:
+- https://twitter.com/rikvduijn/status/853251879320662017
+author: Florian Roth
+date: 2017/04/15
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  condition: selection and not filter
+  filter:
+    CommandLine: '*Shell32.dll*'
+  selection:
+    CommandLine: '*\rundll32.exe *'
+    EventID: 1
+    ParentImage: '*\System32\control.exe'
+fields:
+- CommandLine
+- ParentCommandLine
+falsepositives:
+- Unknown
+level: high
+source: sigma

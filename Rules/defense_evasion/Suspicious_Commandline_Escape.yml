@@ -1,0 +1,52 @@
+type: x-detection-rule
+id: x-detection-rule--c070a7a1-c769-490e-a8b3-800b89933a61
+created: '2018-12-03T23:30:44.558Z'
+modified: '2018-12-03T23:30:44.558Z'
+action: global
+title: Suspicious Commandline Escape
+status: experimental
+description: Detects suspicious process that use escape characters
+references:
+- https://twitter.com/vysecurity/status/885545634958385153
+- https://twitter.com/Hexacorn/status/885553465417756673
+- https://twitter.com/Hexacorn/status/885570278637678592
+- https://www.fireeye.com/blog/threat-research/2017/06/obfuscation-in-the-wild.html
+- http://www.windowsinspired.com/understanding-the-command-line-string-and-arguments-received-by-a-windows-program/
+author: juju4
+detection:
+  condition: selection
+  selection:
+    CommandLine:
+    - <TAB>
+    - ^h^t^t^p
+    - h"t"t"p
+falsepositives:
+- False positives depend on scripts and administrative tools used in the monitored
+  environment
+level: low
+tags:
+- attack.defense_evasion
+- attack.t1140
+type: x-detection-rule
+id: x-detection-rule--814a9ea8-0f88-46f4-8e4a-ef5751fa41e5
+created: '2018-12-03T23:30:44.559Z'
+modified: '2018-12-03T23:30:44.559Z'
+logsource:
+  product: windows
+  description: 'Requirements: Audit Policy : Detailed Tracking > Audit Process creation,
+    Group Policy : Administrative Templates\System\Audit Process Creation'
+  service: security
+detection:
+  selection:
+    EventID: 4688
+type: x-detection-rule
+id: x-detection-rule--90b6dd5f-25e0-4c0f-af33-e34a54d6fb15
+created: '2018-12-03T23:30:44.559Z'
+modified: '2018-12-03T23:30:44.559Z'
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection:
+    EventID: 1
+source: sigma

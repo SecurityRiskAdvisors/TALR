@@ -1,0 +1,73 @@
+type: x-detection-rule
+id: x-detection-rule--e4783669-8564-40df-a19d-21a219a7edba
+created: '2018-12-03T23:30:44.485Z'
+modified: '2018-12-03T23:30:44.485Z'
+action: global
+title: WannaCry Ransomware
+status: experimental
+description: Detects WannaCry Ransomware Activity
+references:
+- https://www.hybrid-analysis.com/sample/ed01ebfbc9eb5bbea545af4d01bf5f1071661840480439c6e5babe8e080e41aa
+author: Florian Roth
+detection:
+  condition: 1 of them
+  selection1:
+    CommandLine:
+    - '*vssadmin delete shadows*'
+    - '*icacls * /grant Everyone:F /T /C /Q*'
+    - '*bcdedit /set {default} recoveryenabled no*'
+    - '*wbadmin delete catalog -quiet*'
+falsepositives:
+- Unknown
+level: critical
+type: x-detection-rule
+id: x-detection-rule--83d54c76-fec4-43c5-b7c0-7eb4acef31d6
+created: '2018-12-03T23:30:44.486Z'
+modified: '2018-12-03T23:30:44.486Z'
+logsource:
+  product: windows
+  description: 'Requirements: Audit Policy : Detailed Tracking > Audit Process creation,
+    Group Policy : Administrative Templates\System\Audit Process Creation'
+  service: security
+detection:
+  selection1:
+    EventID: 4688
+  selection2:
+    EventID: 4688
+    NewProcessName:
+    - '*\tasksche.exe'
+    - '*\mssecsvc.exe'
+    - '*\taskdl.exe'
+    - '*\WanaDecryptor*'
+    - '*\taskhsvc.exe'
+    - '*\taskse.exe'
+    - '*\111.exe'
+    - '*\lhdfrgui.exe'
+    - '*\diskpart.exe'
+    - '*\linuxnew.exe'
+    - '*\wannacry.exe'
+type: x-detection-rule
+id: x-detection-rule--250ef30f-801d-46f2-a167-c3abdfc6f628
+created: '2018-12-03T23:30:44.488Z'
+modified: '2018-12-03T23:30:44.488Z'
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection1:
+    EventID: 1
+  selection2:
+    EventID: 1
+    Image:
+    - '*\tasksche.exe'
+    - '*\mssecsvc.exe'
+    - '*\taskdl.exe'
+    - '*\WanaDecryptor*'
+    - '*\taskhsvc.exe'
+    - '*\taskse.exe'
+    - '*\111.exe'
+    - '*\lhdfrgui.exe'
+    - '*\diskpart.exe'
+    - '*\linuxnew.exe'
+    - '*\wannacry.exe'
+source: sigma

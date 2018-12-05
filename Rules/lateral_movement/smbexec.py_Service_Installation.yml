@@ -1,0 +1,32 @@
+type: x-detection-rule
+id: x-detection-rule--c6862300-7a34-4635-b642-8d23a2c2d2fa
+created: '2018-12-03T23:30:44.547Z'
+modified: '2018-12-03T23:30:44.547Z'
+title: smbexec.py Service Installation
+description: Detects the use of smbexec.py tool by detecting a specific service
+  installation
+references:
+- https://blog.ropnop.com/using-credentials-to-own-windows-boxes-part-2-psexec-and-services/
+author: Omer Faruk Celik
+date: 2018/03/20
+logsource:
+  product: windows
+detection:
+  condition: service_installation
+  service_installation:
+    EventID: 7045
+    ServiceFileName: '*\execute.bat'
+    ServiceName: BTOBTO
+fields:
+- ServiceName
+- ServiceFileName
+falsepositives:
+- Penetration Test
+- Unknown
+level: critical
+tags:
+- attack.lateral_movement
+- attack.execution
+- attack.t1077
+- attack.t1035
+source: sigma

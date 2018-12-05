@@ -1,0 +1,21 @@
+type: x-detection-rule
+id: x-detection-rule--23698c5c-6500-4b37-a296-0bdb3b577154
+created: '2018-12-03T23:30:44.307Z'
+modified: '2018-12-03T23:30:44.307Z'
+title: Buffer Overflow Attempts
+description: Detects buffer overflow attempts in Unix system log files
+references:
+- https://github.com/ossec/ossec-hids/blob/master/etc/rules/attack_rules.xml
+logsource:
+  product: unix
+detection:
+  condition: keywords
+  keywords:
+  - attempt to execute code on stack by
+  - FTP LOGIN FROM .* 0bin0sh
+  - 'rpc.statd[\d+]: gethostbyname error for'
+  - AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+falsepositives:
+- Unkown
+level: high
+source: sigma

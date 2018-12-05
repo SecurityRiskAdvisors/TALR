@@ -1,0 +1,32 @@
+type: x-detection-rule
+id: x-detection-rule--3788d115-cd38-4593-96ad-29d2b315003c
+created: '2018-12-03T23:30:44.550Z'
+modified: '2018-12-03T23:30:44.550Z'
+title: Weak Encryption Enabled and Kerberoast
+description: Detects scenario where weak encryption is enabled for a user profile
+  which could be used for hash/password cracking.
+references:
+- https://adsecurity.org/?p=2053
+- https://www.harmj0y.net/blog/activedirectory/roasting-as-reps/
+author: '@neu5ron'
+logsource:
+  product: windows
+  description: 'Requirements: Audit Policy : Account Management > Audit User Account
+    Management, Group Policy : Computer Configuration\Windows Settings\Security
+    Settings\Advanced Audit Policy Configuration\Audit Policies\Account Management\Audit
+    User Account Management'
+  service: security
+detection:
+  condition: selection and keywords and filters
+  filters:
+  - Enabled
+  keywords:
+  - DES
+  - Preauth
+  - Encrypted
+  selection:
+    EventID: 4738
+falsepositives:
+- Unknown
+level: high
+source: sigma

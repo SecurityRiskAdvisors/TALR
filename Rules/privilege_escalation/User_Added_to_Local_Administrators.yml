@@ -1,0 +1,25 @@
+type: x-detection-rule
+id: x-detection-rule--a5961d1e-66a8-4526-a176-bd41a2635045
+created: '2018-12-03T23:30:44.623Z'
+modified: '2018-12-03T23:30:44.623Z'
+title: User Added to Local Administrators
+status: stable
+description: This rule triggers on user accounts that are added to the local Administrators
+  group, which could be legitimate activity or a sign of privilege escalation activity
+author: Florian Roth
+logsource:
+  product: windows
+  service: security
+detection:
+  condition: selection and not filter
+  filter:
+    SubjectUserName: '*$'
+  selection:
+    EventID: 4732
+    GroupName: Administrators
+falsepositives:
+- Legitimate administrative activity
+level: low
+tags:
+- attack.privilege_escalation
+source: sigma

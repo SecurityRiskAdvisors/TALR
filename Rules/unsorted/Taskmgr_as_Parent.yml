@@ -1,0 +1,29 @@
+type: x-detection-rule
+id: x-detection-rule--f8b63b72-ea8b-45e7-89d6-d983ba59e304
+created: '2018-12-03T23:30:44.916Z'
+modified: '2018-12-03T23:30:44.916Z'
+title: Taskmgr as Parent
+status: experimental
+description: Detects the creation of a process from Windows task manager
+author: Florian Roth
+date: 2018/03/13
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  condition: selection and not filter
+  filter:
+    Image:
+    - resmon.exe
+    - mmc.exe
+  selection:
+    EventID: 1
+    ParentImage: '*\taskmgr.exe'
+fields:
+- Image
+- CommandLine
+- ParentCommandLine
+falsepositives:
+- Administrative activity
+level: low
+source: sigma

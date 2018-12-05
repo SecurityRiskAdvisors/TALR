@@ -1,0 +1,27 @@
+type: x-detection-rule
+id: x-detection-rule--90856154-881b-49f0-850b-e8279c8b1a44
+created: '2018-12-03T23:30:44.656Z'
+modified: '2018-12-03T23:30:44.656Z'
+title: Eventlog Cleared
+status: experimental
+description: Detects a cleared Windows Eventlog as e.g. caused by "wevtutil cl"
+  command execution
+references:
+- https://www.hybrid-analysis.com/sample/027cc450ef5f8c5f653329641ec1fed91f694e0d229928963b30f6b0d7d3a745?environmentId=100
+author: Florian Roth
+date: 2017/06/27
+logsource:
+  product: windows
+  service: system
+detection:
+  condition: selection
+  selection:
+    EventID: 104
+    Source: Eventlog
+falsepositives:
+- unknown
+level: high
+tags:
+- attack.defense_evasion
+- attack.t1070
+source: sigma

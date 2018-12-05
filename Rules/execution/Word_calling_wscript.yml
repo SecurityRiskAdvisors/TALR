@@ -1,0 +1,29 @@
+type: x-detection-rule
+id: x-detection-rule--78f37863-020b-4351-9e2f-0aa987ecd373
+created: '2018-12-04T15:23:00.513Z'
+modified: '2018-12-04T15:23:00.513Z'
+title: Word calling wscript
+revision: '1'
+revNotes:
+- Initial commit
+status: experimental
+description: This rule is designed to alert on MS Word calling wscript
+author: Brandon Martin and Nick Ascoli
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  condition: selection
+  selection:
+    EventID: 1
+    Image:
+    - '*\wscript.exe'
+    ParentImage:
+    - '*\winword.exe'
+falsepositives:
+- unknown
+level: medium
+tags:
+- attack.execution
+enrichment: None
+source: TALR

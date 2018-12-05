@@ -1,0 +1,33 @@
+type: x-detection-rule
+id: x-detection-rule--df9848ea-afa2-41f1-847d-7082be35cb0a
+created: '2018-12-03T23:30:44.433Z'
+modified: '2018-12-03T23:30:44.433Z'
+title: Telegram API Access
+status: experimental
+description: Detects suspicious requests to Telegram API without the usual Telegram
+  User-Agent
+references:
+- https://researchcenter.paloaltonetworks.com/2018/03/unit42-telerat-another-android-trojan-leveraging-telegrams-bot-api-to-target-iranian-users/
+- https://blog.malwarebytes.com/threat-analysis/2016/11/telecrypt-the-ransomware-abusing-telegram-api-defeated/
+- https://www.welivesecurity.com/2016/12/13/rise-telebots-analyzing-disruptive-killdisk-attacks/
+author: Florian Roth
+date: 2018/06/05
+logsource:
+  category: proxy
+detection:
+  condition: selection and not filter
+  filter:
+    UserAgent:
+    - '*Telegram*'
+    - '*Bot*'
+  selection:
+    r-dns:
+    - api.telegram.org
+fields:
+- ClientIP
+- URL
+- UserAgent
+falsepositives:
+- Legitimate use of Telegram bots in the company
+level: medium
+source: sigma

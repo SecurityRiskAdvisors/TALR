@@ -1,0 +1,34 @@
+type: x-detection-rule
+id: x-detection-rule--521cb94e-6e3b-4b94-8ccb-4c002faf4881
+created: '2018-12-03T23:30:44.859Z'
+modified: '2018-12-03T23:30:44.859Z'
+title: Bitsadmin Download
+status: experimental
+description: Detects usage of bitsadmin downloading a file
+references:
+- https://blog.netspi.com/15-ways-to-download-a-file/#bitsadmin
+- https://isc.sans.edu/diary/22264
+author: Michael Haag
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  condition: selection
+  selection:
+    CommandLine:
+    - /transfer
+    EventID: 1
+    Image:
+    - '*\bitsadmin.exe'
+fields:
+- CommandLine
+- ParentCommandLine
+falsepositives:
+- Some legitimate apps use this, but limited.
+level: medium
+tags:
+- attack.defense_evasion
+- attack.persistence
+- attack.t1197
+- attack.s0190
+source: sigma

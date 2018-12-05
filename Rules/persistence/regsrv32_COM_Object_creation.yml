@@ -1,0 +1,30 @@
+type: x-detection-rule
+id: x-detection-rule--a30a0dd0-d2df-43ab-a224-dca887aa8528
+created: '2018-12-04T15:23:00.547Z'
+modified: '2018-12-04T15:23:00.547Z'
+title: regsrv32 COM Object creation
+revision: '1'
+revNotes:
+- Initial commit
+status: experimental
+description: This rule is designed to alert on regsrv32 loading wshom or scrobj
+author: Brandon Martin and Nick Ascoli
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  condition: selection
+  selection:
+    EventID: 7
+    Image:
+    - '*\regsrv32.exe'
+    ImageLoaded:
+    - '*\wshom.ocx'
+    - '*\scrobj.dll'
+falsepositives:
+- unknown
+level: medium
+tags:
+- attack.persistence
+enrichment: None
+source: TALR

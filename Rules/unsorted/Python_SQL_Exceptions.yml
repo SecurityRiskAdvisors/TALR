@@ -1,0 +1,24 @@
+type: x-detection-rule
+id: x-detection-rule--9cff52f5-43d7-4fb7-9f85-b45d2a349cf1
+created: '2018-12-03T23:30:44.447Z'
+modified: '2018-12-03T23:30:44.447Z'
+title: Python SQL Exceptions
+description: Generic rule for SQL exceptions in Python according to PEP 249
+references:
+- https://www.python.org/dev/peps/pep-0249/#exceptions
+author: Thomas Patzke
+logsource:
+  category: application
+  product: python
+detection:
+  condition: exceptions
+  exceptions:
+  - DataError
+  - IntegrityError
+  - ProgrammingError
+  - OperationalError
+falsepositives:
+- Application bugs
+- Penetration testing
+level: medium
+source: sigma

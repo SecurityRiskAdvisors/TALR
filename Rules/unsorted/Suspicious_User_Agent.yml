@@ -1,0 +1,38 @@
+type: x-detection-rule
+id: x-detection-rule--4e98b5e4-8eee-4ff1-937f-5ffb3a6294e9
+created: '2018-12-03T23:30:44.418Z'
+modified: '2018-12-03T23:30:44.418Z'
+title: Suspicious User Agent
+status: experimental
+description: Detects suspicious malformed user agent strings in proxy logs
+references:
+- https://github.com/fastly/waf_testbed/blob/master/templates/default/scanners-user-agents.data.erb
+author: Florian Roth
+logsource:
+  category: proxy
+detection:
+  condition: selection and not falsepositives
+  falsepositives:
+    UserAgent:
+    - Mozilla/3.0 * Acrobat *
+  selection:
+    UserAgent:
+    - user-agent
+    - '* (compatible;MSIE *'
+    - '*.0;Windows NT *'
+    - Mozilla/3.0 *
+    - Mozilla/2.0 *
+    - Mozilla/1.0 *
+    - Mozilla *
+    - ' Mozilla/*'
+    - Mozila/*
+    - _
+    - CertUtil URL Agent
+fields:
+- ClientIP
+- URL
+- UserAgent
+falsepositives:
+- Unknown
+level: high
+source: sigma

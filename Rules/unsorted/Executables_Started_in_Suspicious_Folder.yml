@@ -1,0 +1,39 @@
+type: x-detection-rule
+id: x-detection-rule--bc1ef471-f1ce-45ba-9599-264c719f5cf9
+created: '2018-12-03T23:30:44.906Z'
+modified: '2018-12-03T23:30:44.906Z'
+title: Executables Started in Suspicious Folder
+status: experimental
+description: Detects process starts of binaries from a suspicious folder
+references:
+- https://github.com/mbevilacqua/appcompatprocessor/blob/master/AppCompatSearch.txt
+- https://www.secureworks.com/research/bronze-butler-targets-japanese-businesses
+author: Florian Roth
+date: 2017/10/14
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  condition: selection
+  selection:
+    EventID: 1
+    Image:
+    - C:\PerfLogs\*
+    - C:\$Recycle.bin\*
+    - C:\Intel\Logs\*
+    - C:\Users\Default\*
+    - C:\Users\Public\*
+    - C:\Users\NetworkService\*
+    - C:\Windows\Fonts\*
+    - C:\Windows\Debug\*
+    - C:\Windows\Media\*
+    - C:\Windows\Help\*
+    - C:\Windows\addins\*
+    - C:\Windows\repair\*
+    - C:\Windows\security\*
+    - '*\RSA\MachineKeys\*'
+    - C:\Windows\system32\config\systemprofile\*
+falsepositives:
+- Unknown
+level: high
+source: sigma

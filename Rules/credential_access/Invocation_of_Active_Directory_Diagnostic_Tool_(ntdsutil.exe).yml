@@ -1,0 +1,45 @@
+type: x-detection-rule
+id: x-detection-rule--9522e39a-7fdf-4e4b-9867-203c6830b442
+created: '2018-12-03T23:30:44.606Z'
+modified: '2018-12-03T23:30:44.606Z'
+action: global
+title: Invocation of Active Directory Diagnostic Tool (ntdsutil.exe)
+status: experimental
+description: Detects execution of ntdsutil.exe, which can be used for various attacks
+  against the NTDS database (NTDS.DIT)
+references:
+- https://jpcertcc.github.io/ToolAnalysisResultSheet/details/ntdsutil.htm
+author: Thomas Patzke
+detection:
+  condition: selection
+  selection:
+    CommandLine: '*\ntdsutil.exe *'
+falsepositives:
+- NTDS maintenance
+level: high
+tags:
+- attack.credential_access
+- attack.t1003
+type: x-detection-rule
+id: x-detection-rule--8d7551d2-1539-40fc-942c-6f4ba0c2f264
+created: '2018-12-03T23:30:44.607Z'
+modified: '2018-12-03T23:30:44.607Z'
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection:
+    EventID: 1
+type: x-detection-rule
+id: x-detection-rule--316d1b2f-a7f5-4810-85ab-c1857d5a7fd8
+created: '2018-12-03T23:30:44.608Z'
+modified: '2018-12-03T23:30:44.608Z'
+logsource:
+  product: windows
+  description: 'Requirements: Audit Policy : Detailed Tracking > Audit Process creation,
+    Group Policy : Administrative Templates\System\Audit Process Creation'
+  service: security
+detection:
+  selection:
+    EventID: 4688
+source: sigma

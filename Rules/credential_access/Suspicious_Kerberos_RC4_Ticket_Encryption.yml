@@ -1,0 +1,29 @@
+type: x-detection-rule
+id: x-detection-rule--838132f8-3ace-4fd1-9e30-009918fdbd10
+created: '2018-12-03T23:30:44.612Z'
+modified: '2018-12-03T23:30:44.612Z'
+title: Suspicious Kerberos RC4 Ticket Encryption
+status: experimental
+description: Detects service ticket requests using RC4 encryption type
+references:
+- https://adsecurity.org/?p=3458
+- https://www.trimarcsecurity.com/single-post/TrimarcResearch/Detecting-Kerberoasting-Activity
+logsource:
+  product: windows
+  service: security
+detection:
+  condition: selection and not reduction
+  reduction:
+  - ServiceName: $*
+  selection:
+    EventID: 4769
+    TicketEncryptionType: '0x17'
+    TicketOptions: '0x40810000'
+falsepositives:
+- Service accounts used on legacy systems (e.g. NetApp)
+- Windows Domains with DFL 2003 and legacy systems
+level: medium
+tags:
+- attack.credential_access
+- attack.t1208
+source: sigma

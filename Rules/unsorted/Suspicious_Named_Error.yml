@@ -1,0 +1,25 @@
+type: x-detection-rule
+id: x-detection-rule--39fea0e5-23c0-4967-839f-dbeaf4c66bf8
+created: '2018-12-03T23:30:44.316Z'
+modified: '2018-12-03T23:30:44.316Z'
+title: Suspicious Named Error
+status: experimental
+description: Detects suspicious DNS error messages that indicate a fatal or suspicious
+  error that could be caused by exploiting attempts
+references:
+- https://github.com/ossec/ossec-hids/blob/master/etc/rules/named_rules.xml
+author: Florian Roth
+date: 2018/02/20
+logsource:
+  product: linux
+  service: syslog
+detection:
+  condition: keywords
+  keywords:
+  - '* dropping source port zero packet from *'
+  - '* denied AXFR from *'
+  - '* exiting (due to fatal error)*'
+falsepositives:
+- Unknown
+level: high
+source: sigma

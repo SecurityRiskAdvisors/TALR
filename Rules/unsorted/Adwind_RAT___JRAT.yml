@@ -1,0 +1,68 @@
+type: x-detection-rule
+id: x-detection-rule--8fa3012c-0427-4f4a-8995-129c87e0cd39
+created: '2018-12-03T23:30:44.479Z'
+modified: '2018-12-03T23:30:44.479Z'
+action: global
+title: Adwind RAT / JRAT
+status: experimental
+description: Detects javaw.exe in AppData folder as used by Adwind / JRAT
+references:
+- https://www.hybrid-analysis.com/sample/ba86fa0d4b6af2db0656a88b1dd29f36fe362473ae8ad04255c4e52f214a541c?environmentId=100
+- https://www.first.org/resources/papers/conf2017/Advanced-Incident-Detection-and-Threat-Hunting-using-Sysmon-and-Splunk.pdf
+author: Florian Roth, Tom Ueltschi
+date: 2017/11/10
+detection:
+  condition: selection
+level: high
+type: x-detection-rule
+id: x-detection-rule--9d9040b8-9f0c-425c-97a8-535eea1d035b
+created: '2018-12-03T23:30:44.481Z'
+modified: '2018-12-03T23:30:44.481Z'
+logsource:
+  product: windows
+  description: 'Requirements: Audit Policy : Detailed Tracking > Audit Process creation,
+    Group Policy : Administrative Templates\System\Audit Process Creation'
+  service: security
+detection:
+  selection:
+    EventID: 4688
+    CommandLine:
+    - '*\AppData\Roaming\Oracle*\java*.exe *'
+    - '*cscript.exe *Retrive*.vbs *'
+type: x-detection-rule
+id: x-detection-rule--25bc327c-ab52-46ff-aca8-cf1719018432
+created: '2018-12-03T23:30:44.481Z'
+modified: '2018-12-03T23:30:44.481Z'
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection:
+    EventID: 1
+    Image: '*\AppData\Roaming\Oracle\bin\java*.exe'
+type: x-detection-rule
+id: x-detection-rule--01f46930-9b33-47a3-a69c-2329c6a75ef5
+created: '2018-12-03T23:30:44.482Z'
+modified: '2018-12-03T23:30:44.482Z'
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection:
+    EventID: 11
+    TargetFilename:
+    - '*\AppData\Roaming\Oracle\bin\java*.exe'
+    - '*\Retrive*.vbs'
+type: x-detection-rule
+id: x-detection-rule--4f2f25a1-4459-4574-b3cd-7a596cb5c771
+created: '2018-12-03T23:30:44.483Z'
+modified: '2018-12-03T23:30:44.483Z'
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection:
+    EventID: 13
+    Details: '%AppData%\Roaming\Oracle\bin\*'
+    TargetObject: \REGISTRY\MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Run*
+source: sigma

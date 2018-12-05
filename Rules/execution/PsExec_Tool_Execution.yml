@@ -1,0 +1,41 @@
+type: x-detection-rule
+id: x-detection-rule--d75e808e-de36-4ead-a68d-b533990b5030
+created: '2018-12-03T23:30:44.679Z'
+modified: '2018-12-03T23:30:44.679Z'
+title: PsExec Tool Execution
+status: experimental
+description: Detects PsExec service installation and execution events (service and
+  Sysmon)
+references:
+- https://www.jpcert.or.jp/english/pub/sr/ir_research.html
+- https://jpcertcc.github.io/ToolAnalysisResultSheet
+author: Thomas Patzke
+logsource:
+  product: windows
+detection:
+  condition: 1 of them
+  service_execution:
+    EventID: 7036
+    ServiceName: PSEXESVC
+  service_installation:
+    EventID: 7045
+    ServiceFileName: '*\PSEXESVC.exe'
+    ServiceName: PSEXESVC
+  sysmon_processcreation:
+    EventID: 1
+    Image: '*\PSEXESVC.exe'
+    User: NT AUTHORITY\SYSTEM
+fields:
+- EventID
+- CommandLine
+- ParentCommandLine
+- ServiceName
+- ServiceFileName
+falsepositives:
+- unknown
+level: low
+tags:
+- attack.execution
+- attack.t1035
+- attack.s0029
+source: sigma

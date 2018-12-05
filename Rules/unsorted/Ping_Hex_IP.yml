@@ -1,0 +1,27 @@
+type: x-detection-rule
+id: x-detection-rule--1b5a1c0c-6cb5-4d90-bb8e-6847439f71b8
+created: '2018-12-03T23:30:44.921Z'
+modified: '2018-12-03T23:30:44.921Z'
+title: Ping Hex IP
+description: Detects a ping command that uses a hex encoded IP address
+references:
+- https://github.com/vysec/Aggressor-VYSEC/blob/master/ping.cna
+- https://twitter.com/vysecurity/status/977198418354491392
+author: Florian Roth
+date: 2018/03/23
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  condition: selection
+  selection:
+    CommandLine:
+    - '*\ping.exe 0x*'
+    - '*\ping 0x*'
+    EventID: 1
+fields:
+- ParentCommandLine
+falsepositives:
+- Unlikely, because no sane admin pings IP addresses in a hexadecimal form
+level: high
+source: sigma

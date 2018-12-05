@@ -1,0 +1,34 @@
+type: x-detection-rule
+id: x-detection-rule--b10afd01-4e46-4fb2-b52b-7197223d4c4f
+created: '2018-12-03T23:30:44.449Z'
+modified: '2018-12-03T23:30:44.449Z'
+title: Django framework exceptions
+description: Detects suspicious Django web application framework exceptions that
+  could indicate exploitation attempts
+references:
+- https://docs.djangoproject.com/en/1.11/ref/exceptions/
+- https://docs.djangoproject.com/en/1.11/topics/logging/#django-security
+author: Thomas Patzke
+logsource:
+  category: application
+  product: django
+detection:
+  condition: keywords
+  keywords:
+  - SuspiciousOperation
+  - DisallowedHost
+  - DisallowedModelAdminLookup
+  - DisallowedModelAdminToField
+  - DisallowedRedirect
+  - InvalidSessionKey
+  - RequestDataTooBig
+  - SuspiciousFileOperation
+  - SuspiciousMultipartForm
+  - SuspiciousSession
+  - TooManyFieldsSent
+  - PermissionDenied
+falsepositives:
+- Application bugs
+- Penetration testing
+level: medium
+source: sigma

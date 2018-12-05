@@ -1,0 +1,39 @@
+type: x-detection-rule
+id: x-detection-rule--f07d0885-a592-4a14-8438-d7507ec70e4b
+created: '2018-12-03T23:30:44.840Z'
+modified: '2018-12-03T23:30:44.840Z'
+title: Windows Shell Spawning Suspicious Program
+status: experimental
+description: Detects a suspicious child process of a Windows shell
+references:
+- https://mgreen27.github.io/posts/2018/04/02/DownloadCradle.html
+author: Florian Roth
+date: 2018/04/06
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  condition: selection
+  selection:
+    EventID: 1
+    Image:
+    - '*\schtasks.exe'
+    - '*\nslookup.exe'
+    - '*\certutil.exe'
+    - '*\bitsadmin.exe'
+    - '*\mshta.exe'
+    ParentImage:
+    - '*\mshta.exe'
+    - '*\powershell.exe'
+    - '*\cmd.exe'
+    - '*\rundll32.exe'
+    - '*\cscript.exe'
+    - '*\wscript.exe'
+    - '*\wmiprvse.exe'
+fields:
+- CommandLine
+- ParentCommandLine
+falsepositives:
+- Administrative scripts
+level: high
+source: sigma

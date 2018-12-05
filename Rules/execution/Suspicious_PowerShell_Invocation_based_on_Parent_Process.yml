@@ -1,0 +1,36 @@
+type: x-detection-rule
+id: x-detection-rule--e4d60178-f084-4ce4-8812-300b1ce73432
+created: '2018-12-03T23:30:44.926Z'
+modified: '2018-12-03T23:30:44.926Z'
+title: Suspicious PowerShell Invocation based on Parent Process
+status: experimental
+description: Detects suspicious powershell invocations from interpreters or unusual
+  programs
+references:
+- https://www.carbonblack.com/2017/03/15/attackers-leverage-excel-powershell-dns-latest-non-malware-attack/
+author: Florian Roth
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  condition: selection and not falsepositive
+  falsepositive:
+    CurrentDirectory: '*\Health Service State\*'
+  selection:
+    EventID: 1
+    Image:
+    - '*\powershell.exe'
+    ParentImage:
+    - '*\wscript.exe'
+    - '*\cscript.exe'
+fields:
+- CommandLine
+- ParentCommandLine
+falsepositives:
+- Microsoft Operations Manager (MOM)
+- Other scripts
+level: medium
+tags:
+- attack.execution
+- attack.t1086
+source: sigma

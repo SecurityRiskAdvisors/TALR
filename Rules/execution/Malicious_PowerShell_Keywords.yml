@@ -1,0 +1,51 @@
+type: x-detection-rule
+id: x-detection-rule--15026178-860c-456f-b129-136f041cb0fa
+created: '2018-12-03T23:30:44.697Z'
+modified: '2018-12-03T23:30:44.697Z'
+title: Malicious PowerShell Keywords
+status: experimental
+description: Detects keywords from well-known PowerShell exploitation frameworks
+references:
+- https://adsecurity.org/?p=2921
+author: Sean Metcalf (source), Florian Roth (rule)
+logsource:
+  product: windows
+  description: It is recommanded to use the new "Script Block Logging" of PowerShell
+    v5 https://adsecurity.org/?p=2277
+  service: powershell
+detection:
+  condition: keywords
+  keywords:
+  - AdjustTokenPrivileges
+  - IMAGE_NT_OPTIONAL_HDR64_MAGIC
+  - Management.Automation.RuntimeException
+  - Microsoft.Win32.UnsafeNativeMethods
+  - ReadProcessMemory.Invoke
+  - Runtime.InteropServices
+  - SE_PRIVILEGE_ENABLED
+  - System.Security.Cryptography
+  - System.Runtime.InteropServices
+  - LSA_UNICODE_STRING
+  - MiniDumpWriteDump
+  - PAGE_EXECUTE_READ
+  - Net.Sockets.SocketFlags
+  - Reflection.Assembly
+  - SECURITY_DELEGATION
+  - TOKEN_ADJUST_PRIVILEGES
+  - TOKEN_ALL_ACCESS
+  - TOKEN_ASSIGN_PRIMARY
+  - TOKEN_DUPLICATE
+  - TOKEN_ELEVATION
+  - TOKEN_IMPERSONATE
+  - TOKEN_INFORMATION_CLASS
+  - TOKEN_PRIVILEGES
+  - TOKEN_QUERY
+  - Metasploit
+  - Mimikatz
+falsepositives:
+- Penetration tests
+level: high
+tags:
+- attack.execution
+- attack.t1086
+source: sigma
