@@ -1,0 +1,573 @@
+{
+    "type": "bundle",
+    "id": "bundle--c04f0182-72ac-4c90-b477-5010f62a9671",
+    "spec_version": "2.0",
+    "objects": [
+        {
+            "type": "x-detection-rule",
+            "id": "x-detection-rule--b1590825-51ef-462c-916a-22c64429a762",
+            "created": "2018-12-04T15:23:00.451Z",
+            "modified": "2018-12-04T15:23:00.451Z",
+            "title": "SC Service Creation",
+            "revision": "1",
+            "revNotes": [
+                "Initial commit"
+            ],
+            "status": "experimental",
+            "description": "This rule is designed to alert on SC service creation via powershell",
+            "author": "Brandon Martin and Nick Ascoli",
+            "logsource": {
+                "product": "windows",
+                "service": "sysmon"
+            },
+            "detection": {
+                "condition": "selection",
+                "selection": {
+                    "CommandLine": [
+                        "sc create"
+                    ],
+                    "EventID": 1,
+                    "Image": [
+                        "*\\powershell.exe"
+                    ]
+                }
+            },
+            "falsepositives": [
+                "unknown"
+            ],
+            "level": "medium",
+            "tags": [
+                "attack.persistence"
+            ],
+            "enrichment": "None",
+            "source": "TALR"
+        },
+        {
+            "type": "x-detection-rule",
+            "id": "x-detection-rule--9bb3672f-bb0a-4e8f-b3c9-1e82b0fc1ec3",
+            "created": "2018-12-04T15:23:00.460Z",
+            "modified": "2018-12-04T15:23:00.460Z",
+            "title": "RegSvr32 making network connections",
+            "revision": "1",
+            "revNotes": [
+                "Initial commit"
+            ],
+            "status": "experimental",
+            "description": "This rule is designed to alert on RegSvr32 making a network connection",
+            "author": "Brandon Martin and Nick Ascoli",
+            "logsource": {
+                "product": "windows",
+                "service": "sysmon"
+            },
+            "detection": {
+                "condition": "selection",
+                "selection": {
+                    "EventID": 3,
+                    "Image": [
+                        "*\\regsvr32.exe"
+                    ],
+                    "Initiated": [
+                        true
+                    ]
+                }
+            },
+            "falsepositives": [
+                "unknown"
+            ],
+            "level": "medium",
+            "tags": [
+                "attack.execution"
+            ],
+            "enrichment": "None",
+            "source": "TALR"
+        },
+        {
+            "type": "x-detection-rule",
+            "id": "x-detection-rule--8ed9a237-eb97-4924-843c-b9cdc151beb2",
+            "created": "2018-12-04T15:23:00.467Z",
+            "modified": "2018-12-04T15:23:00.467Z",
+            "title": "WMIC calling vbscript or jscript",
+            "revision": "1",
+            "revNotes": [
+                "Initial commit"
+            ],
+            "status": "experimental",
+            "description": "This rule is designed to alert on WMIC loading jscript or vbscript",
+            "author": "Brandon Martin and Nick Ascoli",
+            "logsource": {
+                "product": "windows",
+                "service": "sysmon"
+            },
+            "detection": {
+                "condition": "selection",
+                "selection": {
+                    "EventID": 8,
+                    "SourceImage": [
+                        "*\\wmic.exe"
+                    ],
+                    "StartModule": [
+                        "jscript.dll",
+                        "vbscript.dll"
+                    ]
+                }
+            },
+            "falsepositives": [
+                "unknown"
+            ],
+            "level": "medium",
+            "tags": [
+                "attack.execution"
+            ],
+            "enrichment": "None",
+            "source": "TALR"
+        },
+        {
+            "type": "x-detection-rule",
+            "id": "x-detection-rule--beb07dfd-c4c8-4180-aaa5-1647c703f374",
+            "created": "2018-12-04T15:23:00.476Z",
+            "modified": "2018-12-04T15:23:00.476Z",
+            "title": "regsrv32 COM Object creation",
+            "revision": "1",
+            "revNotes": [
+                "Initial commit"
+            ],
+            "status": "experimental",
+            "description": "This rule is designed to alert on regsrv32 loading wshom or scrobj",
+            "author": "Brandon Martin and Nick Ascoli",
+            "logsource": {
+                "product": "windows",
+                "service": "sysmon"
+            },
+            "detection": {
+                "condition": "selection",
+                "selection": {
+                    "EventID": 7,
+                    "Image": [
+                        "*\\regsrv32.exe"
+                    ],
+                    "ImageLoaded": [
+                        "*\\wshom.ocx",
+                        "*\\scrobj.dll"
+                    ]
+                }
+            },
+            "falsepositives": [
+                "unknown"
+            ],
+            "level": "medium",
+            "tags": [
+                "attack.persistence"
+            ],
+            "enrichment": "None",
+            "source": "TALR"
+        },
+        {
+            "type": "x-detection-rule",
+            "id": "x-detection-rule--f6957f7b-30f7-4f03-98d5-efead516be3a",
+            "created": "2018-11-15T23:46:27.168Z",
+            "modified": "2018-11-15T23:46:27.168Z",
+            "title": "MSBuild Invoked by WMI",
+            "revision": "1",
+            "revNotes": [
+                "Initial commit"
+            ],
+            "status": "experimental",
+            "description": "This rule is designed to alert on the use of MSBUILD.EXE to move laterally through WMI, for example; wmic.exe /node:<IP> process call create \"msbuild.exe -arguments\"",
+            "author": "Tyler Fredrick and Kevin Foster",
+            "logsource": {
+                "product": "windows",
+                "service": "sysmon"
+            },
+            "detection": {
+                "condition": "selection",
+                "selection": {
+                    "EventID": 1,
+                    "Image": [
+                        "*\\MSBUILD.exe"
+                    ],
+                    "ParentImage": [
+                        "*\\WMIPVRSE.EXE"
+                    ]
+                }
+            },
+            "fields": [
+                "CommandLine",
+                "ParentCommandLine"
+            ],
+            "falsepositives": [
+                "unknown"
+            ],
+            "level": "high",
+            "tags": [
+                "attack.lateral_movement"
+            ],
+            "enrichment": "None",
+            "source": "TALR"
+        },
+        {
+            "type": "x-detection-rule",
+            "id": "x-detection-rule--d55d28c1-3488-4939-a8f0-ed708169a8b4",
+            "created": "2018-12-04T15:23:00.492Z",
+            "modified": "2018-12-04T15:23:00.492Z",
+            "title": "WMIC process call create",
+            "revision": "1",
+            "revNotes": [
+                "Initial commit"
+            ],
+            "status": "experimental",
+            "description": "This rule is designed to alert on WMIC attempting to start a process",
+            "author": "Brandon Martin and Nick Ascoli",
+            "logsource": {
+                "product": "windows",
+                "service": "sysmon"
+            },
+            "detection": {
+                "condition": "selection",
+                "selection": {
+                    "CommandLine": [
+                        "*process call create *"
+                    ],
+                    "EventID": 1,
+                    "Image": [
+                        "*\\wmic.exe"
+                    ]
+                }
+            },
+            "falsepositives": [
+                "unknown"
+            ],
+            "level": "medium",
+            "tags": [
+                "attack.execution"
+            ],
+            "enrichment": "None",
+            "source": "TALR"
+        },
+        {
+            "type": "x-detection-rule",
+            "id": "x-detection-rule--c92aae87-20ef-4bf3-8908-29717a5beebd",
+            "created": "2018-12-04T15:23:00.499Z",
+            "modified": "2018-12-04T15:23:00.499Z",
+            "title": "mshta executing powershell",
+            "revision": "1",
+            "revNotes": [
+                "Initial commit"
+            ],
+            "status": "experimental",
+            "description": "This rule is designed to alert on the use of mshta executing powershell, for example 'mshta.exe javascript:a=(GetObject(\"script:C/Payload/Location/Powershell.sct)).Exec();close();\"'",
+            "author": "Brandon Martin and Nick Ascoli",
+            "logsource": {
+                "product": "windows",
+                "service": "sysmon"
+            },
+            "detection": {
+                "condition": "selection",
+                "selection": {
+                    "EventID": 1,
+                    "ParentImage": [
+                        "*\\mshta.exe"
+                    ],
+                    "Image": [
+                        "*\\powershell.exe"
+                    ]
+                }
+            },
+            "falsepositives": [
+                "unknown"
+            ],
+            "level": "high",
+            "tags": [
+                "attack.execution"
+            ],
+            "enrichment": "None",
+            "source": "TALR"
+        },
+        {
+            "type": "x-detection-rule",
+            "id": "x-detection-rule--61871530-f11c-439f-bfbc-e5fa9a4c5117",
+            "created": "2018-12-04T15:23:00.506Z",
+            "modified": "2018-12-04T15:23:00.506Z",
+            "title": "Office applications writing an exe via WMI",
+            "revision": "1",
+            "revNotes": [
+                "Initial commit"
+            ],
+            "status": "experimental",
+            "description": "This rule is designed to alert on the use of microsoft apps to write an exe and drop it via WMI",
+            "author": "Brandon Martin and Nick Ascoli",
+            "logsource": {
+                "product": "windows",
+                "service": "sysmon"
+            },
+            "detection": {
+                "condition": "selection",
+                "selection": {
+                    "EventID": 7,
+                    "Image": [
+                        "*\\winword.exe",
+                        "*\\excel.exe",
+                        "*\\powerpnt.exe"
+                    ],
+                    "ImageLoaded": [
+                        "*\\wmiutils.dll"
+                    ]
+                }
+            },
+            "falsepositives": [
+                "unknown"
+            ],
+            "level": "high",
+            "tags": [
+                "attack.execution"
+            ],
+            "enrichment": "None"
+        },
+        {
+            "type": "x-detection-rule",
+            "id": "x-detection-rule--78f37863-020b-4351-9e2f-0aa987ecd373",
+            "created": "2018-12-04T15:23:00.513Z",
+            "modified": "2018-12-04T15:23:00.513Z",
+            "title": "Word calling wscript",
+            "revision": "1",
+            "revNotes": [
+                "Initial commit"
+            ],
+            "status": "experimental",
+            "description": "This rule is designed to alert on MS Word calling wscript",
+            "author": "Brandon Martin and Nick Ascoli",
+            "logsource": {
+                "product": "windows",
+                "service": "sysmon"
+            },
+            "detection": {
+                "condition": "selection",
+                "selection": {
+                    "EventID": 1,
+                    "Image": [
+                        "*\\wscript.exe"
+                    ],
+                    "ParentImage": [
+                        "*\\winword.exe"
+                    ]
+                }
+            },
+            "falsepositives": [
+                "unknown"
+            ],
+            "level": "medium",
+            "tags": [
+                "attack.execution"
+            ],
+            "enrichment": "None",
+            "source": "TALR"
+        },
+        {
+            "type": "x-detection-rule",
+            "id": "x-detection-rule--a14cbf5e-89b0-48b1-90a4-157bfd932425",
+            "created": "2018-12-04T15:23:00.519Z",
+            "modified": "2018-12-04T15:23:00.519Z",
+            "title": "WMIC getting OS",
+            "revision": "1",
+            "revNotes": [
+                "Initial commit"
+            ],
+            "status": "experimental",
+            "description": "This rule is designed to alert on WMIC getting OS information",
+            "author": "Brandon Martin and Nick Ascoli",
+            "logsource": {
+                "product": "windows",
+                "service": "sysmon"
+            },
+            "detection": {
+                "condition": "selection",
+                "selection": {
+                    "CommandLine": [
+                        "*wmic os get *",
+                        "*os get *"
+                    ],
+                    "EventID": 1,
+                    "Image": [
+                        "*\\wmic.exe"
+                    ]
+                }
+            },
+            "falsepositives": [
+                "unknown"
+            ],
+            "level": "medium",
+            "tags": [
+                "attack.execution"
+            ],
+            "enrichment": "None",
+            "source": "TALR"
+        },
+        {
+            "type": "x-detection-rule",
+            "id": "x-detection-rule--58fc6254-ff6b-48f3-861d-b912d41170fa",
+            "created": "2018-12-04T15:23:00.526Z",
+            "modified": "2018-12-04T15:23:00.526Z",
+            "title": "WMI making a network connection",
+            "revision": "1",
+            "revNotes": [
+                "Initial commit"
+            ],
+            "status": "experimental",
+            "description": "This rule is designed to alert on WMI making a network connection",
+            "author": "Brandon Martin and Nick Ascoli",
+            "logsource": {
+                "product": "windows",
+                "service": "sysmon"
+            },
+            "detection": {
+                "condition": "selection",
+                "selection": {
+                    "EventID": 3,
+                    "Image": [
+                        "*\\wmiapsrv.exe"
+                    ],
+                    "Initiated": [
+                        true
+                    ]
+                }
+            },
+            "falsepositives": [
+                "unknown"
+            ],
+            "level": "medium",
+            "tags": [
+                "attack.execution"
+            ],
+            "enrichment": "None",
+            "source": "TALR"
+        },
+        {
+            "type": "x-detection-rule",
+            "id": "x-detection-rule--ed692c4b-5049-4a60-bf50-bf4530a53f3a",
+            "created": "2018-12-04T15:23:00.540Z",
+            "modified": "2018-12-04T15:23:00.540Z",
+            "title": "Process Setting Hidden and System File Attributes",
+            "revision": "1",
+            "revNotes": [
+                "Initial commit"
+            ],
+            "status": "experimental",
+            "description": "This rule is designed to alert on +s or +h from process attrib.exe",
+            "author": "Brandon Martin and Nick Ascoli",
+            "logsource": {
+                "product": "windows",
+                "service": "sysmon"
+            },
+            "detection": {
+                "condition": "selection",
+                "selection": {
+                    "CommandLine": [
+                        "*+s*",
+                        "*+h*"
+                    ],
+                    "EventID": 1,
+                    "Image": [
+                        "*\\attrib.exe"
+                    ]
+                }
+            },
+            "falsepositives": [
+                "unknown"
+            ],
+            "level": "medium",
+            "tags": [
+                "attack.execution"
+            ],
+            "enrichment": "None",
+            "source": "TALR"
+        },
+        {
+            "type": "x-detection-rule",
+            "id": "x-detection-rule--a30a0dd0-d2df-43ab-a224-dca887aa8528",
+            "created": "2018-12-04T15:23:00.547Z",
+            "modified": "2018-12-04T15:23:00.547Z",
+            "title": "regsrv32 COM Object creation",
+            "revision": "1",
+            "revNotes": [
+                "Initial commit"
+            ],
+            "status": "experimental",
+            "description": "This rule is designed to alert on regsrv32 loading wshom or scrobj",
+            "author": "Brandon Martin and Nick Ascoli",
+            "logsource": {
+                "product": "windows",
+                "service": "sysmon"
+            },
+            "detection": {
+                "condition": "selection",
+                "selection": {
+                    "EventID": 7,
+                    "Image": [
+                        "*\\regsrv32.exe"
+                    ],
+                    "ImageLoaded": [
+                        "*\\wshom.ocx",
+                        "*\\scrobj.dll"
+                    ]
+                }
+            },
+            "falsepositives": [
+                "unknown"
+            ],
+            "level": "medium",
+            "tags": [
+                "attack.persistence"
+            ],
+            "enrichment": "None",
+            "source": "TALR"
+        },
+        {
+            "type": "x-detection-rule",
+            "id": "x-detection-rule--99c98c04-eba1-4bec-b426-67820f5cf4f9",
+            "created": "2018-12-04T15:23:00.556Z",
+            "modified": "2018-12-04T15:23:00.556Z",
+            "title": "Hidden PowerShell with Unusual Parent",
+            "revision": "1",
+            "revNotes": [
+                "Initial commit"
+            ],
+            "status": "experimental",
+            "description": "This rule is designed to alert on the use of hidden powershell, with a strange parent process",
+            "author": "Brandon Martin and Nick Ascoli",
+            "logsource": {
+                "product": "windows",
+                "service": "sysmon"
+            },
+            "detection": {
+                "condition": "selection",
+                "selection": {
+                    "CommandLine": [
+                        "*-nop hidden *",
+                        "*hidden*"
+                    ],
+                    "EventID": 1,
+                    "Image": [
+                        "*\\powershell.exe"
+                    ],
+                    "ParentImage": [
+                        "*\\wmiprvse.exe",
+                        "*\\winword.exe",
+                        "*\\excel.exe",
+                        "*\\mshta.exe",
+                        "*\\mspub.exe",
+                        "*\\powerpnt.exe",
+                        "*\\rundll32.exe"
+                    ]
+                }
+            },
+            "falsepositives": [
+                "unknown"
+            ],
+            "level": "high",
+            "tags": [
+                "attack.execution"
+            ],
+            "enrichment": "None",
+            "source": "TALR"
+        }
+    ]
+}
