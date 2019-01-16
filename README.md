@@ -54,7 +54,7 @@ Only required if using tools.
 # Goals:
 * [X] Select SIEM rule sharing method (Tranlate to STIX, transport with TAXII)
 * [X] Automate ingestion of SIEM rules from a STIX bundle (stix2sigmac)
-* [ ] Create sample bundles for community use
+* [X] Create sample bundles for community use
 * [ ] Develop bundling tool
 * [ ] Publish public TAXII server for community testing
 
