@@ -122,7 +122,7 @@ importRules()
                 mv "rule$counter.yml" $rulesLocation"imported/$attack/$title.yml"
                 echo "$(date), $id, rule $title.yml imported and moved to /imported/$attack/ on search filter $importFilter" >> $rulesLocation"log.csv"
             # Importing all sigma rules, with NO backend params
-            elif [ "$importFilter" = "all" ] && [ "$type" = "x-sigma-rules" ] && [ $backendOptions = "none" ]; then
+            elif [ "$importFilter" = "all" ] && [ "$type" = "x-detection-rule" ] && [ $backendOptions = "none" ]; then
                 echo "This rule matches search parameters. Importing." ${yellow}
                 sigmac -t $SIEM $rulesLocation"rule$counter.yml"
                 importCounter=$((importCounter+1))
@@ -130,7 +130,7 @@ importRules()
                 mv "rule$counter.yml" $rulesLocation"imported/$attack/$title.yml"
                 echo "$(date), $id, rule $title.yml imported and moved to /imported/$attack/ on search filter $importFilter" >> $rulesLocation"log.csv"
             # Importing all sigma rules, with backend params
-            elif [ "$importFilter" = "all" ] && [ "$type" = "x-sigma-rules" ] && [ $backendOptions != "none" ]; then
+            elif [ "$importFilter" = "all" ] && [ "$type" = "x-detection-rule" ] && [ $backendOptions != "none" ]; then
                 echo "This rule matches search parameters. Importing." ${yellow}
                 sigmac -t $SIEM $backendOptions $rulesLocation"rule$counter.yml"
                 importCounter=$((importCounter+1))
@@ -138,7 +138,7 @@ importRules()
                 mv "rule$counter.yml" $rulesLocation"imported/$attack/$title.yml"
                 echo "$(date), $id, rule $title.yml imported and moved to /imported/$attack/ on search filter $importFilter" >> $rulesLocation"log.csv"
             # No match on the import filter
-            elif [ "$type" != "x-sigma-rules" ]; then
+            elif [ "$type" != "x-detection-rule" ]; then
                 echo "This is not a sigma rule, it is a(n) STIX $type object${yellow}"
                 echo "Moving to /STIX/"
                 mv "rule$counter.yml" $rulesLocation"STIX/$id.yml"
