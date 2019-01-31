@@ -29,6 +29,6 @@ Product/Category/Service/ATT&CK Type Examples:
 * ```VPN``` Will get any rules for VPN products
 * etc...
 
-#Next Steps:
+# Next Steps:
 
 * Combine seperated detections that were seperated by a STIX bundle (currently in dev)
