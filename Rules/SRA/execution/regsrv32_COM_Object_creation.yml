@@ -27,4 +27,4 @@ level: medium
 tags:
 - attack.persistence
 enrichment: None
-source: TALR
+source: SRA
